@@ -30,6 +30,9 @@ public class Loadingscreen extends FragmentActivity {
         Resources.LIFE_LEFT = BitmapFactory.decodeResource(getResources(), R.drawable.heart);
         Resources.LIFE_LEFT = Bitmap.createScaledBitmap(Resources.LIFE_LEFT, 40, 34, false);
 
+        Resources.SHEEP_ONE = BitmapFactory.decodeResource(getResources(), R.drawable.sheep1);
+        Resources.SHEEP_ONE = Bitmap.createScaledBitmap(Resources.SHEEP_ONE, 70, 70, false);
+
     }
 
 

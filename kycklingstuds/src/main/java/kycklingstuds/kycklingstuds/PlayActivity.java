@@ -2,10 +2,10 @@ package kycklingstuds.kycklingstuds;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.LinearLayout;
 
 
 public class PlayActivity extends FragmentActivity {
@@ -13,8 +13,13 @@ public class PlayActivity extends FragmentActivity {
     private Surface mSurface;
     private Game mGame;
 
+    static LinearLayout mRetryContainer;
+
+
     private void init(){
-        mGame = new Game();
+        PlayActivity.mRetryContainer = (LinearLayout) findViewById(R.id.retryContainer);
+        PlayActivity.mRetryContainer.setVisibility(View.GONE);
+        mGame = new Game(this);
 
         mSurface = (Surface)findViewById(R.id.gameCanvas);
         mSurface.setOnTouchListener(mSurface);
@@ -28,33 +33,26 @@ public class PlayActivity extends FragmentActivity {
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_play);
-
-
-
-
+        System.out.println("DEBUG: ONCREATE PLAY");
         init();
     }
 
 
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.play, menu);
-        return true;
+     public void restartGame(View v){
+        mGame.restartGame();
+        mSurface.restartSurface();
+        PlayActivity.mRetryContainer.setVisibility(View.GONE);
+    }
+
+    public void exitToMenu(View v){
+        finish();
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
+    protected void onStop(){
+        super.onStop();
+        mGame.itIsTimeToExit();
+        finish();
     }
-
 }

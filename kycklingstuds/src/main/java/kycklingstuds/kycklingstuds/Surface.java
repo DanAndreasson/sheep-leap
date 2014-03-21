@@ -5,6 +5,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.RectF;
 import android.util.AttributeSet;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
@@ -17,6 +18,7 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     private SurfaceHolder mHolder;
     private Paint mPaint;
     private Game game;
+    private boolean running;
     private int pollCount;
 
 
@@ -32,29 +34,30 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
 
     }
 
-    public void setGame(Game g){
+    public void restartSurface() {
+        running = true;
+    }
+
+    public void setGame(Game g) {
         game = g;
     }
 
     @Override
     public boolean onTouch(View v, MotionEvent event) {
-        game.setBoardXPos( event.getX());
-        game.setBoardYPos( event.getY());
-        Resources.WHALE.setBounds((int)game.getBoardXPos(), (int)game.getBoardYPos(), (int)game.getBoardWidthPos(), (int)game.getBoardHeightPos());
+        game.setBoardXPos(event.getX());
+        game.updateBoardPosition();
+
         return true;
     }
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Resources.DEFAULT_BACKGROUND.setBounds(0, 0, getWidth(), getHeight());
-        Resources.WHALE.setBounds((int)game.getBoardXPos(), (int)game.getBoardYPos(), (int)game.getBoardWidthPos(), (int)game.getBoardHeightPos());
-
-        game.setPaused(true);
+        Resources.WHALE.setBounds((int) game.getBoardXPos(), (int) game.getBoardYPos(), (int) game.getBoardWidthPos(), (int) game.getBoardHeightPos());
         thread = new Thread(this);
         thread.start();
+        restartSurface();
         game.start();
-
-
     }
 
     @Override
@@ -66,15 +69,16 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     public void surfaceDestroyed(SurfaceHolder holder) {
 
     }
+
     @Override
-    public void onDraw(Canvas c){
+    public void onDraw(Canvas c) {
         Resources.DEFAULT_BACKGROUND.draw(c);
 
-        for (int i = 0; i < game.getLivesLeft(); ++i){
-            c.drawBitmap(Resources.LIFE_LEFT, 50+(50*i), 50, mPaint);
+        for (int i = 0; i < game.getLivesLeft(); ++i) {
+            c.drawBitmap(Resources.LIFE_LEFT, 50 + (50 * i), 50, mPaint);
         }
 
-        c.drawText(Integer.toString(game.getScore())+"p", getWidth()-100, 100, mPaint);
+        c.drawText(Integer.toString(game.getScore()) + "p", getWidth() - 100, 100, mPaint);
 
         pollCount = 0;
         synchronized (game.getActiveBouncies()) {
@@ -83,7 +87,10 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
                     ++pollCount;
                     continue;
                 }
-                c.drawOval(b.getPos(), b.paint);
+
+               // c.drawOval(b.getPos(), b.paint);
+                RectF r = b.getPos();
+                c.drawBitmap(Resources.SHEEP_ONE, r.left, r.top, mPaint);
             }
             for (int i = 0; i < pollCount; ++i) {
                 game.getActiveBouncies().poll();
@@ -94,21 +101,22 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         Resources.WHALE.draw(c);
 
 
-
-       // c.drawLine(0, 250, 2000, 250, mPaint);
+        // c.drawLine(0, 250, 2000, 250, mPaint);
        /* for (int i = 0; i < game.pathSize(); ++i){
             c.drawOval(game.getWaypoint(i), mPaint);
         }*/
 
-       // postDelayed(this,33);
-       // System.out.println("DEBUG: Draw BoardX: " + game.getBoardXPos() + ". Y: " + game.getBoardYPos());
+        // postDelayed(this,33);
+        // System.out.println("DEBUG: Draw BoardX: " + game.getBoardXPos() + ". Y: " + game.getBoardYPos());
 
     }
 
 
     @Override
     public void run() {
-        while (game.getPaused()) {
+        System.out.println("DEBUG: TimetoExit: "+ game.isTimeToExit()+" running: " + running + ". paused? " + game.isPaused());
+        while (!game.isTimeToExit() && running && !game.isPaused()) {
+
             try {
                 mCanvas = mHolder.lockCanvas();
 
@@ -122,6 +130,6 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
                 }
             }
         }
-}
+    }
 
 }
