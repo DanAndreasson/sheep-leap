@@ -4,5 +4,9 @@
     <string name="app_name">Kycklingstuds</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
-
+    <string name="title_activity_menu">MenuActivity</string>
+    <string name="title_activity_play">PlayActivity</string>
+    <string name="playBtn">Play</string>
+    <string name="leaderboardBtn">Leaderboards</string>
+    <string name="optionsBtn">Options</string>
 </resources>

@@ -1,43 +1,47 @@
 package kycklingstuds.kycklingstuds;
 
-import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.Window;
+import android.view.WindowManager;
 
 
-public class Loadingscreen extends FragmentActivity {
+public class PlayActivity extends FragmentActivity {
 
+    private Surface mSurface;
+    private Game mGame;
+
+    private void init(){
+        mGame = new Game();
+
+        mSurface = (Surface)findViewById(R.id.gameCanvas);
+        mSurface.setOnTouchListener(mSurface);
+        mSurface.setGame(mGame);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loadingscreen);
 
-        loadResources(); // Initializes resources such as images, sounds etc
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+        setContentView(R.layout.activity_play);
 
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
+
+
+
+        init();
     }
 
-    private void loadResources() {
-        Resources.DEFAULT_BACKGROUND = getResources().getDrawable(R.drawable.background);
-        Resources.WHALE = getResources().getDrawable(R.drawable.whale);
-
-        Resources.LIFE_LEFT = BitmapFactory.decodeResource(getResources(), R.drawable.heart);
-        Resources.LIFE_LEFT = Bitmap.createScaledBitmap(Resources.LIFE_LEFT, 40, 34, false);
-
-    }
 
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.loadingscreen, menu);
+        getMenuInflater().inflate(R.menu.play, menu);
         return true;
     }
 

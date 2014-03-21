@@ -1,0 +1,63 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="kycklingstuds.kycklingstuds.MenuActivity"
+    android:background="#ffffff"
+    android:id="@+id/menu">
+
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageView"
+        android:src="@drawable/background"/>
+
+    <TextView
+        android:layout_width="429dp"
+        android:layout_height="fill_parent"
+        android:text="KYCKLINGSTUDS"
+        android:textSize="50dp"
+        android:id="@+id/textView"
+        android:textAlignment="center"
+        android:layout_gravity="center_horizontal|top" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="91dp"
+
+        android:id="@+id/linearLayout"
+        android:layout_gravity="center_horizontal|top">
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/playBtn"
+            android:id="@+id/playBtn"
+
+            android:onClick="onPlayBtnClicked" />
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/leaderboardBtn"
+            android:id="@+id/leaderboardBtn"
+            android:layout_below="@+id/playBtn"
+            android:layout_alignLeft="@+id/playBtn"
+            android:layout_alignStart="@+id/playBtn"
+            android:onClick="onLeaderboardBtnClicked" />
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:text="@string/optionsBtn"
+            android:id="@+id/optionsBtn"
+            android:layout_centerVertical="true"
+            android:layout_alignLeft="@+id/leaderboardBtn"
+            android:layout_alignStart="@+id/leaderboardBtn"
+            android:onClick="onOptionsBtnClicked" />
+    </LinearLayout>
+
+</FrameLayout>

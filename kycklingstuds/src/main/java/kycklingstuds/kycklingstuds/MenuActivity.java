@@ -1,35 +1,19 @@
 package kycklingstuds.kycklingstuds;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 
-public class Loadingscreen extends FragmentActivity {
-
+public class MenuActivity extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loadingscreen);
-
-        loadResources(); // Initializes resources such as images, sounds etc
-
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
-    }
-
-    private void loadResources() {
-        Resources.DEFAULT_BACKGROUND = getResources().getDrawable(R.drawable.background);
-        Resources.WHALE = getResources().getDrawable(R.drawable.whale);
-
-        Resources.LIFE_LEFT = BitmapFactory.decodeResource(getResources(), R.drawable.heart);
-        Resources.LIFE_LEFT = Bitmap.createScaledBitmap(Resources.LIFE_LEFT, 40, 34, false);
-
+        setContentView(R.layout.activity_menu);
     }
 
 
@@ -37,7 +21,7 @@ public class Loadingscreen extends FragmentActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.loadingscreen, menu);
+        getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
 
@@ -51,6 +35,19 @@ public class Loadingscreen extends FragmentActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onPlayBtnClicked(View v){
+        Intent intent = new Intent(this, PlayActivity.class);
+        startActivity(intent);
+    }
+
+    public void onOptionsBtnClicked(View v){
+        System.out.println("DEBUG: onOptionsBtnClicked");
+    }
+
+    public void onLeaderboardBtnClicked(View v){
+        System.out.println("DEBUG: onLeaderboardBtnClicked");
     }
 
 }
