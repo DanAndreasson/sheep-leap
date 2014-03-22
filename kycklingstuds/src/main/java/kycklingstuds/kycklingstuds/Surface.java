@@ -17,6 +17,7 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     private Canvas mCanvas;
     private SurfaceHolder mHolder;
     private Paint mPaint;
+    private Paint mPaintPC; // Peronal Record Paint
     private Game game;
     private boolean running;
     private int pollCount;
@@ -31,6 +32,10 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         mPaint = new Paint(Color.BLACK);
         mPaint.setColor(Color.BLACK);
         mPaint.setTextSize(50);
+
+        mPaintPC = new Paint(Color.RED);
+        mPaintPC.setColor(Color.RED);
+        mPaintPC.setTextSize(25);
 
     }
 
@@ -77,8 +82,8 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         for (int i = 0; i < game.getLivesLeft(); ++i) {
             c.drawBitmap(Resources.LIFE_LEFT, 50 + (50 * i), 50, mPaint);
         }
-
-        c.drawText(Integer.toString(game.getScore()) + "p", getWidth() - 100, 100, mPaint);
+        c.drawText(Integer.toString(game.getScore()) + "p", getWidth() - 155, 100, mPaint);
+        c.drawText("Personal best: " + Integer.toString(Resources.HIGHSCORE.getHighscore().getPoints()) + "p", getWidth() - 230, 135, mPaintPC);
 
         pollCount = 0;
         synchronized (game.getActiveBouncies()) {
@@ -87,27 +92,21 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
                     ++pollCount;
                     continue;
                 }
-
-               // c.drawOval(b.getPos(), b.paint);
                 RectF r = b.getPos();
-                c.drawBitmap(Resources.SHEEP_ONE, r.left, r.top, mPaint);
+                c.drawBitmap(b.getSprite(), r.left, r.top, mPaint);
             }
             for (int i = 0; i < pollCount; ++i) {
                 game.getActiveBouncies().poll();
             }
         }
 
-        //c.drawRect(game.getBoardXPos(), game.getBoardYPos(), game.getBoardWidthPos(), game.getBoardHeightPos(), mPaint);
         Resources.WHALE.draw(c);
-
 
         // c.drawLine(0, 250, 2000, 250, mPaint);
        /* for (int i = 0; i < game.pathSize(); ++i){
             c.drawOval(game.getWaypoint(i), mPaint);
         }*/
 
-        // postDelayed(this,33);
-        // System.out.println("DEBUG: Draw BoardX: " + game.getBoardXPos() + ". Y: " + game.getBoardYPos());
 
     }
 
@@ -115,18 +114,19 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     @Override
     public void run() {
         System.out.println("DEBUG: TimetoExit: "+ game.isTimeToExit()+" running: " + running + ". paused? " + game.isPaused());
-        while (!game.isTimeToExit() && running && !game.isPaused()) {
+        while (!game.isTimeToExit() ) {
+            while (running && !game.isPaused()) {
+                try {
+                    mCanvas = mHolder.lockCanvas();
 
-            try {
-                mCanvas = mHolder.lockCanvas();
-
-                synchronized (mHolder) {
-                    postInvalidate();
-                    //onDraw(mCanvas);
-                }
-            } finally {
-                if (mCanvas != null) {
-                    mHolder.unlockCanvasAndPost(mCanvas);
+                    synchronized (mHolder) {
+                        postInvalidate();
+                        //onDraw(mCanvas);
+                    }
+                } finally {
+                    if (mCanvas != null) {
+                        mHolder.unlockCanvasAndPost(mCanvas);
+                    }
                 }
             }
         }

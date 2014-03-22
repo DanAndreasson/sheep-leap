@@ -1,5 +1,6 @@
 package kycklingstuds.kycklingstuds;
 
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.RectF;
@@ -14,6 +15,9 @@ public class Bouncy {
 
     private boolean finished;
 
+    private int animationTick;
+    private int animationState;
+
     public Bouncy(Game g) {
         pathIndex = 0;
         game = g;
@@ -23,21 +27,14 @@ public class Bouncy {
 
         paintYellow.setColor(Color.YELLOW);
         paint = paintYellow;
+
+        animationTick = 0;
+        animationState = 0;
     }
 
     public void move() {
         if (dead || finished) return;
         ++pathIndex;
-      /*  if (pathIndex >= game.getFirstDeathPoint()-20 && pathIndex <= game.getFirstDeathPoint()) {
-
-            if (game.checkCollision(game.getFirstDeathPoint())) {
-                pathIndex += game.getFirstDeathPoint() - pathIndex;
-                return ;
-            }
-            if (pathIndex == game.getFirstDeathPoint() ){
-                die(0);
-            }
-        }*/
         if (pathIndex == game.getFirstDeathPoint()) {
             if (!game.checkCollision(pathIndex)) {
                 die(0);
@@ -52,6 +49,11 @@ public class Bouncy {
             if (!game.checkCollision(pathIndex)) {
                 die(2);
             }
+        }
+
+        if (++animationTick >= 15){
+            animationState = (animationState+1)%4;
+            animationTick = 0;
         }
     }
 
@@ -79,5 +81,24 @@ public class Bouncy {
             return game.getWaypoint(game.pathSize() - 1);
         }
         return game.getWaypoint(pathIndex);
+    }
+
+    public Bitmap getSprite() {
+
+        switch (animationState) {
+            case 0:
+                return Resources.SHEEP_ONE;
+            case 1:
+                return Resources.SHEEP_TWO;
+            case 2:
+                return Resources.SHEEP_THREE;
+            case 3:
+                return Resources.SHEEP_FOUR;
+            case 4:
+                return Resources.SHEEP_FIVE;
+            default:
+                System.out.println("DEBUG: Bouncy animation error!");
+                return Resources.SHEEP_ONE;
+        }
     }
 }

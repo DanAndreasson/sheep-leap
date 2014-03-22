@@ -17,6 +17,7 @@ public class Loadingscreen extends FragmentActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loadingscreen);
 
+        loadLocalDb();
         loadResources(); // Initializes resources such as images, sounds etc
 
         Intent intent = new Intent(this, MenuActivity.class);
@@ -31,8 +32,25 @@ public class Loadingscreen extends FragmentActivity {
         Resources.LIFE_LEFT = Bitmap.createScaledBitmap(Resources.LIFE_LEFT, 40, 34, false);
 
         Resources.SHEEP_ONE = BitmapFactory.decodeResource(getResources(), R.drawable.sheep1);
-        Resources.SHEEP_ONE = Bitmap.createScaledBitmap(Resources.SHEEP_ONE, 70, 70, false);
+        Resources.SHEEP_ONE = Bitmap.createScaledBitmap(Resources.SHEEP_ONE, 75, 75, false);
 
+        Resources.SHEEP_TWO = BitmapFactory.decodeResource(getResources(), R.drawable.sheep2);
+        Resources.SHEEP_TWO = Bitmap.createScaledBitmap(Resources.SHEEP_TWO, 75, 75, false);
+
+        Resources.SHEEP_THREE = BitmapFactory.decodeResource(getResources(), R.drawable.sheep3);
+        Resources.SHEEP_THREE = Bitmap.createScaledBitmap(Resources.SHEEP_THREE, 75, 75, false);
+
+        Resources.SHEEP_FOUR = BitmapFactory.decodeResource(getResources(), R.drawable.sheep4);
+        Resources.SHEEP_FOUR = Bitmap.createScaledBitmap(Resources.SHEEP_FOUR, 75, 75, false);
+
+        Resources.SHEEP_FIVE = BitmapFactory.decodeResource(getResources(), R.drawable.sheep5);
+        Resources.SHEEP_FIVE = Bitmap.createScaledBitmap(Resources.SHEEP_FIVE, 75, 75, false);
+
+    }
+
+    private void loadLocalDb(){
+        Resources.HIGHSCORE = new Highscore(this);
+        Resources.HIGHSCORE.open();
     }
 
 

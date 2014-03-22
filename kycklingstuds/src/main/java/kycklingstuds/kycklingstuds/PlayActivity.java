@@ -37,6 +37,12 @@ public class PlayActivity extends FragmentActivity {
         init();
     }
 
+    @Override
+    public void onBackPressed() {
+        mGame.itIsTimeToExit();
+        finish();
+    }
+
 
 
      public void restartGame(View v){

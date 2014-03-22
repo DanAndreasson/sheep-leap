@@ -25,6 +25,8 @@ public class Game implements Runnable {
     private float boardMinXPos;
     private float boardMaxXPos;
 
+    private int bouncySize;
+
     private float mStartX;
     private float mStartY;
     private ArrayList<RectF> path;
@@ -56,7 +58,9 @@ public class Game implements Runnable {
     public Game(FragmentActivity fa) {
         this.playActivity = fa;
         this.mStartX = -10;
-        this.mStartY = 400;
+        this.mStartY = 300;
+
+        this.bouncySize = 75;
 
         this.timeToExit = false;
 
@@ -76,7 +80,7 @@ public class Game implements Runnable {
         this.livesLeft = 4;
         this.score = 0;
         this.boardXPos = 310;
-        this.boardYPos = 615;
+        this.boardYPos = 555;
         this.boardHeight = 72;
         this.boardWidth = 130;
         this.boardMinXPos = 270;
@@ -147,7 +151,7 @@ public class Game implements Runnable {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
 
-        sp.add(new Spawn(this, 50));
+        sp.add(new Spawn(this, 100));
         sp.add(new Spawn(this, 100));
         sp.add(new Spawn(this, 100));
         sp.add(new Spawn(this, 150));
@@ -268,7 +272,7 @@ public class Game implements Runnable {
     private Queue<Spawn> chunkTwo() {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
-        sp.add(new Spawn(this, 100));
+        sp.add(new Spawn(this, 900));
         sp.add(new Spawn(this, 20));
         sp.add(new Spawn(this, 20));
         sp.add(new Spawn(this, 20));
@@ -328,7 +332,7 @@ public class Game implements Runnable {
     private Queue<Spawn> chunkThird() {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
-        sp.add(new Spawn(this, 100));
+        sp.add(new Spawn(this, 900));
         sp.add(new Spawn(this, 20));
         sp.add(new Spawn(this, 20));
         sp.add(new Spawn(this, 20));
@@ -389,7 +393,7 @@ public class Game implements Runnable {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
 
-        sp.add(new Spawn(this, 50));
+        sp.add(new Spawn(this, 900));
         sp.add(new Spawn(this, 100));
         sp.add(new Spawn(this, 100));
         sp.add(new Spawn(this, 150));
@@ -468,20 +472,20 @@ public class Game implements Runnable {
 
         for (int i = 0; i <= 120; ++i) {
             x = x + 2;
-            path.add(new RectF(x, y, x + 30, y + 30));
+            path.add(new RectF(x, y, x + this.bouncySize, y + this.bouncySize));
         }
         for (int i = 0; i <= 100; ++i) {
             y = y - 3f + yVelo;
             x = x + xVelo;
             yVelo += (3f / 100);
-            path.add(new RectF(x, y, x + 30, y + 30));
+            path.add(new RectF(x, y, x + this.bouncySize, y + this.bouncySize));
         }
 
         for (int i = 0; i <= 235; ++i) {
             y = y + 3f - yVelo;
             x = x + xVelo;
             yVelo -= (3f / 235f);
-            path.add(new RectF(x, y, x + 30, y + 30));
+            path.add(new RectF(x, y, x + this.bouncySize, y + this.bouncySize));
         }
         firstDeath = this.path.size() - 1;
         yVelo = 0;
@@ -489,13 +493,13 @@ public class Game implements Runnable {
             y = y - 3f + yVelo;
             x = x + xVelo;
             yVelo += (3f / 235f);
-            path.add(new RectF(x, y, x + 30, y + 30));
+            path.add(new RectF(x, y, x + this.bouncySize, y + this.bouncySize));
         }
         for (int i = 0; i <= 235; ++i) {
             y = y + 3f - yVelo;
             x = x + xVelo;
             yVelo -= (3f / 235f);
-            path.add(new RectF(x, y, x + 30, y + 30));
+            path.add(new RectF(x, y, x + this.bouncySize, y + this.bouncySize));
         }
         secondDeath = this.path.size() - 1;
         yVelo = 0;
@@ -503,13 +507,13 @@ public class Game implements Runnable {
             y = y - 3f + yVelo;
             x = x + xVelo;
             yVelo += (3f / 235f);
-            path.add(new RectF(x, y, x + 30, y + 30));
+            path.add(new RectF(x, y, x + this.bouncySize, y + this.bouncySize));
         }
         for (int i = 0; i <= 235; ++i) {
             y = y + 3f - yVelo;
             x = x + xVelo;
             yVelo -= (3f / 235f);
-            path.add(new RectF(x, y, x + 30, y + 30));
+            path.add(new RectF(x, y, x + this.bouncySize, y + this.bouncySize));
         }
         thirdDeath = this.path.size() - 1;
         yVelo = 0;
@@ -517,18 +521,18 @@ public class Game implements Runnable {
             y = y - 3f + yVelo;
             x = x + xVelo;
             yVelo += (3f / 235f);
-            path.add(new RectF(x, y, x + 30, y + 30));
+            path.add(new RectF(x, y, x + this.bouncySize, y + this.bouncySize));
         }
         for (int i = 0; i <= 100; ++i) {
             y = y + 3f - yVelo;
             x = x + xVelo;
             yVelo -= (3f / 100f);
-            path.add(new RectF(x, y, x + 30, y + 30));
+            path.add(new RectF(x, y, x + this.bouncySize, y + this.bouncySize));
         }
         finishPoint = this.path.size() - 1;
         for (int i = 0; i <= 120; ++i) {
             x = x + 2;
-            path.add(new RectF(x, y, x + 30, y + 30));
+            path.add(new RectF(x, y, x + this.bouncySize, y + this.bouncySize));
         }
 
         deathPoints = new ArrayList<RectF>();
@@ -657,17 +661,19 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
-        while (!this.timeToExit && !this.lostGame) {
-            ++this.gameTicks;
+        while (!this.timeToExit ) {
+            while (!this.lostGame) {
+                ++this.gameTicks;
 
-            moveActiveBouncies();
+                moveActiveBouncies();
 
-            animateBoard();
+                animateBoard();
 
-            spawnBouncie();
+                spawnBouncie();
 
 
-            wait(6);
+                wait(6);
+            }
         }
     }
 
@@ -702,14 +708,24 @@ public class Game implements Runnable {
 
     public void lifeLost() {
         if (--this.livesLeft <= 0) {
-            this.lostGame = true;
-            this.paused = true;
-            playActivity.runOnUiThread(new Runnable() {
-                public void run() {
-                    PlayActivity.mRetryContainer.setVisibility(View.VISIBLE);
-                }
-            });
+            gameOver();
         }
+    }
+
+    public void gameOver(){
+        this.lostGame = true;
+        this.paused = true;
+        if (this.score > 0) {
+            Resources.HIGHSCORE.createScore(this.score);
+            Resources.HIGHSCORE.newHighScore();
+        }
+
+        playActivity.runOnUiThread(new Runnable() {
+            public void run() {
+                PlayActivity.mRetryContainer.setVisibility(View.VISIBLE);
+            }
+        });
+
     }
 
     public void updateBoardPosition() {
@@ -722,5 +738,7 @@ public class Game implements Runnable {
 
     public void itIsTimeToExit() {
         this.timeToExit = true;
+        this.lostGame = true;
+        this.paused = true;
     }
 }
