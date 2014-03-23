@@ -65,6 +65,7 @@ public class Bouncy {
 
     public void finished() {
         game.receiveScore();
+        Resources.soundManager.playSound(SoundManager.BAA_SOUND);
         finished = true;
     }
 

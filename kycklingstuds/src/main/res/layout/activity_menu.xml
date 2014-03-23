@@ -15,9 +15,9 @@
         android:scaleType="fitXY" />
 
     <TextView
-        android:layout_width="429dp"
-        android:layout_height="fill_parent"
-        android:text="KYCKLINGSTUDS"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SHEEP LEAP"
         android:textSize="50dp"
         android:id="@+id/textView"
         android:textAlignment="center"
@@ -62,5 +62,8 @@
             android:layout_alignStart="@+id/leaderboardBtn"
             android:onClick="onOptionsBtnClicked" />
     </LinearLayout>
+
+
+
 
 </FrameLayout>

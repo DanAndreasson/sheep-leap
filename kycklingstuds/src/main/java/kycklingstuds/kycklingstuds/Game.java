@@ -63,7 +63,7 @@ public class Game implements Runnable {
         this.bouncySize = 75;
 
         this.timeToExit = false;
-
+        // Resources.soundManager.playBackgroundMusic(SoundManager.BACKGROUND_MUSIC );
         setPath();
         this.thread = new Thread(this);
 
@@ -661,8 +661,9 @@ public class Game implements Runnable {
 
     @Override
     public void run() {
+
         while (!this.timeToExit ) {
-            while (!this.lostGame) {
+             while (!this.lostGame) {
                 ++this.gameTicks;
 
                 moveActiveBouncies();
@@ -686,6 +687,7 @@ public class Game implements Runnable {
         if (c) {
             ++this.boardAnimationState;
             this.boardAnimationDownwards = true;
+            Resources.soundManager.playSound(SoundManager.BOUNCE_SOUND);
         }
         return c;
     }
@@ -707,6 +709,7 @@ public class Game implements Runnable {
     }
 
     public void lifeLost() {
+        Resources.soundManager.playSound(SoundManager.SPLASH_SOUND);
         if (--this.livesLeft <= 0) {
             gameOver();
         }
@@ -715,6 +718,7 @@ public class Game implements Runnable {
     public void gameOver(){
         this.lostGame = true;
         this.paused = true;
+        Resources.soundManager.playSound(SoundManager.GAMEOVER_SOUND);
         if (this.score > 0) {
             Resources.HIGHSCORE.createScore(this.score);
             Resources.HIGHSCORE.newHighScore();
@@ -728,6 +732,7 @@ public class Game implements Runnable {
 
     }
 
+
     public void updateBoardPosition() {
         Resources.WHALE.setBounds((int) getBoardXPos(), (int) getBoardYPos(), (int) getBoardWidthPos(), (int) getBoardHeightPos());
     }
@@ -740,5 +745,6 @@ public class Game implements Runnable {
         this.timeToExit = true;
         this.lostGame = true;
         this.paused = true;
+        Resources.soundManager.stopSound();
     }
 }

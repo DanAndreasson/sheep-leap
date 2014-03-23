@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="kycklingstuds.kycklingstuds" >
+    package="kycklingstuds.kycklingstuds"
+    >
 
     <application
         android:allowBackup="true"
@@ -29,6 +30,8 @@
             android:label="@string/title_activity_play"
             android:screenOrientation="landscape">
         </activity>
+
+
 
     </application>
 

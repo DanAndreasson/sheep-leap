@@ -9,16 +9,19 @@ import android.view.Menu;
 import android.view.MenuItem;
 
 
-public class Loadingscreen extends FragmentActivity {
 
+public class Loadingscreen extends FragmentActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loadingscreen);
 
+
+        loadSound();
         loadLocalDb();
         loadResources(); // Initializes resources such as images, sounds etc
+
 
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
@@ -45,7 +48,10 @@ public class Loadingscreen extends FragmentActivity {
 
         Resources.SHEEP_FIVE = BitmapFactory.decodeResource(getResources(), R.drawable.sheep5);
         Resources.SHEEP_FIVE = Bitmap.createScaledBitmap(Resources.SHEEP_FIVE, 75, 75, false);
+    }
 
+    private void loadSound(){
+        Resources.soundManager = new SoundManager(this);
     }
 
     private void loadLocalDb(){
