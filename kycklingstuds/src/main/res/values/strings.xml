@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">Kycklingstuds</string>
+    <string name="app_name">Sheep Leap</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_menu">MenuActivity</string>
@@ -9,4 +9,6 @@
     <string name="playBtn">Play</string>
     <string name="leaderboardBtn">Leaderboards</string>
     <string name="optionsBtn">Options</string>
+    <string name="authBtn">Facebook Login</string>
+    <string name="app_id">Sheep Leap</string>
 </resources>

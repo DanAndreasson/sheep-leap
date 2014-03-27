@@ -16,7 +16,7 @@ public class Resources {
     // This class will contain all images, sounds etc
     // The files will be initialized from the loadingscreen. All variables will be static
     static Drawable DEFAULT_BACKGROUND;
-    static Drawable WHALE;
+    static Bitmap WHALE;
 
     static Highscore HIGHSCORE;
 

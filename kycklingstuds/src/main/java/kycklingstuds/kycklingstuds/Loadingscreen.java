@@ -28,8 +28,11 @@ public class Loadingscreen extends FragmentActivity {
     }
 
     private void loadResources() {
-        Resources.DEFAULT_BACKGROUND = getResources().getDrawable(R.drawable.background);
-        Resources.WHALE = getResources().getDrawable(R.drawable.whale);
+        Resources.DEFAULT_BACKGROUND = getResources().getDrawable(R.drawable.background_s3);
+       // Resources.WHALE = getResources().getDrawable(R.drawable.whale);
+
+        Resources.WHALE = BitmapFactory.decodeResource(getResources(), R.drawable.whale);
+        Resources.WHALE = Bitmap.createScaledBitmap(Resources.WHALE, 132, 84, false);
 
         Resources.LIFE_LEFT = BitmapFactory.decodeResource(getResources(), R.drawable.heart);
         Resources.LIFE_LEFT = Bitmap.createScaledBitmap(Resources.LIFE_LEFT, 40, 34, false);

@@ -28,7 +28,6 @@ public class SoundManager {
             @Override
             public void onLoadComplete(SoundPool soundPool, int sampleId, int status) {
 
-                    System.out.println("DEBUG: Sound id: " + sampleId);
                     mSoundLoaded = true;
 
             }
@@ -53,21 +52,18 @@ public class SoundManager {
     public void playBackgroundMusic(int soundId) {
         if(mSoundLoaded) {
             BACKGROUND_MUSIC_STREAMID = mSoundPool.play(soundId, BACKGROUND_MUSIC_VOLUME, BACKGROUND_MUSIC_VOLUME, 1, -1, 1f);
-            System.out.println("DEBUG: Trying to play BGM: " + soundId);
         }
     }
 
     public void playSound(int soundId) {
         if(mSoundLoaded) {
             mSoundPool.play(soundId, mVolume, mVolume, 2, 0, 1f);
-            System.out.println("DEBUG: Trying to play: " + soundId);
         }
     }
 
     public void stopSound() {
         if(mSoundLoaded) {
             mSoundPool.stop(BACKGROUND_MUSIC_STREAMID);
-            System.out.println("DEBUG: Trying to stop: BGM ");
         }
     }
 

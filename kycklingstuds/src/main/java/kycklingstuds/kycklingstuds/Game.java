@@ -53,6 +53,7 @@ public class Game implements Runnable {
 
     private FragmentActivity playActivity;
     private boolean timeToExit;
+    private int level;
 
     // Constructor
     public Game(FragmentActivity fa) {
@@ -79,10 +80,11 @@ public class Game implements Runnable {
 
         this.livesLeft = 4;
         this.score = 0;
+        this.level = 1;
         this.boardXPos = 310;
         this.boardYPos = 555;
         this.boardHeight = 72;
-        this.boardWidth = 130;
+        this.boardWidth = 132;
         this.boardMinXPos = 270;
         this.boardMaxXPos = 990;
 
@@ -116,33 +118,34 @@ public class Game implements Runnable {
                 this.spawnPool = chunkOne();
                 break;
             case 2:
-                this.spawnPool = chunkOne();
+                this.spawnPool = chunkTwo();
                 break;
             case 3:
-                this.spawnPool = chunkOne();
+                this.spawnPool = chunkThird();
                 break;
             // DIFFICULT 1
             case 4:
                 this.spawnPool = chunkFour();
                 break;
             case 5:
-                this.spawnPool = chunkFour();
+                this.spawnPool = chunkFive();
                 break;
             case 6:
-                this.spawnPool = chunkFour();
+                this.spawnPool = chunkThird();
                 break;
             // DIFFICULT 2
             case 7:
-                this.spawnPool = chunkFour();
+                this.spawnPool = chunkOne();
                 break;
             case 8:
-                this.spawnPool = chunkFour();
+                this.spawnPool = chunkTwo();
                 break;
             case 9:
-                this.spawnPool = chunkFour();
+                this.spawnPool = chunkThird();
                 break;
+
             default:
-                this.spawnPool = chunkFour();
+                this.spawnPool = chunkThird();
                 break;
         }
     }
@@ -151,61 +154,27 @@ public class Game implements Runnable {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
 
-        sp.add(new Spawn(this, 100));
+        sp.add(new Spawn(this, 400));
         sp.add(new Spawn(this, 100));
         sp.add(new Spawn(this, 100));
         sp.add(new Spawn(this, 150));
 
-        sp.add(new Spawn(this, 1300));
+        sp.add(new Spawn(this, 1200));
         sp.add(new Spawn(this, 30));
         sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
 
-        sp.add(new Spawn(this, 600));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 50));
+        sp.add(new Spawn(this, 950));
+        sp.add(new Spawn(this, 350));
+        sp.add(new Spawn(this, 350));
+        sp.add(new Spawn(this, 750));
+        sp.add(new Spawn(this, 350));
+        sp.add(new Spawn(this, 350));
+        sp.add(new Spawn(this, 750));
+        sp.add(new Spawn(this, 350));
+        sp.add(new Spawn(this, 350));
 
-        sp.add(new Spawn(this, 1100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 230));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
 
-        sp.add(new Spawn(this, 1150));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 230));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 230));
-        sp.add(new Spawn(this, 200));
 
-        sp.add(new Spawn(this, 1150));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 230));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 230));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 230));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 200));
 
 
         //sp.add(new Spawn(this, 50));
@@ -273,58 +242,28 @@ public class Game implements Runnable {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
         sp.add(new Spawn(this, 900));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
+        sp.add(new Spawn(this, 40));
+        sp.add(new Spawn(this, 40));
+        sp.add(new Spawn(this, 40));
+        sp.add(new Spawn(this, 1000));
+        sp.add(new Spawn(this, 40));
+        sp.add(new Spawn(this, 40));
+        sp.add(new Spawn(this, 40));
+
+        sp.add(new Spawn(this, 800));
         sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
+        sp.add(new Spawn(this, 110));
+        sp.add(new Spawn(this, 120));
+        sp.add(new Spawn(this, 130));
+
+        sp.add(new Spawn(this, 900));
+        sp.add(new Spawn(this, 40));
+        sp.add(new Spawn(this, 40));
+        sp.add(new Spawn(this, 40));
+        sp.add(new Spawn(this, 1000));
+        sp.add(new Spawn(this, 40));
+        sp.add(new Spawn(this, 40));
+        sp.add(new Spawn(this, 40));
         return sp;
 
     }
@@ -333,79 +272,73 @@ public class Game implements Runnable {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
         sp.add(new Spawn(this, 900));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 20));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 200));
-        sp.add(new Spawn(this, 300));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 450));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 450));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 450));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 450));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 450));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 450));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 450));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 450));
+
+
+
         return sp;
 
     }
-
+//HARD
     private Queue<Spawn> chunkFour() {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
 
-        sp.add(new Spawn(this, 900));
+       /* sp.add(new Spawn(this, 900));
         sp.add(new Spawn(this, 100));
         sp.add(new Spawn(this, 100));
         sp.add(new Spawn(this, 150));
         sp.add(new Spawn(this, 50));
         sp.add(new Spawn(this, 250));
         sp.add(new Spawn(this, 100));
-        sp.add(new Spawn(this, 150));
+        sp.add(new Spawn(this, 150));*/
+
+
 
         sp.add(new Spawn(this, 900));
+        sp.add(new Spawn(this, 350));
+        sp.add(new Spawn(this, 300));
         sp.add(new Spawn(this, 250));
-        sp.add(new Spawn(this, 90));
-        sp.add(new Spawn(this, 150));
+        sp.add(new Spawn(this, 100));
+        sp.add(new Spawn(this, 50));
+        sp.add(new Spawn(this, 50));
+        sp.add(new Spawn(this, 100));
+        sp.add(new Spawn(this, 200));
+        sp.add(new Spawn(this, 250));
+
+        sp.add(new Spawn(this, 1100));
+        sp.add(new Spawn(this, 350));
+        sp.add(new Spawn(this, 300));
+        sp.add(new Spawn(this, 250));
+        sp.add(new Spawn(this, 100));
+        sp.add(new Spawn(this, 50));
+        sp.add(new Spawn(this, 50));
+        sp.add(new Spawn(this, 100));
+        sp.add(new Spawn(this, 200));
+        sp.add(new Spawn(this, 250));
 
        /* sp.add(new Spawn(this, 600));
         sp.add(new Spawn(this, 100));
@@ -452,6 +385,47 @@ public class Game implements Runnable {
         sp.add(new Spawn(this, 200));
         sp.add(new Spawn(this, 200));
         sp.add(new Spawn(this, 200));*/
+
+        System.out.println("DEBUG: Size: " + sp.size());
+        return sp;
+
+    }
+//VERY HARD
+    private Queue<Spawn> chunkFive() {
+        Queue<Spawn> sp = new LinkedList<Spawn>();
+
+
+        sp.add(new Spawn(this, 840));
+        sp.add(new Spawn(this, 80));
+        sp.add(new Spawn(this, 80));
+        sp.add(new Spawn(this, 80));
+        sp.add(new Spawn(this, 80));
+        sp.add(new Spawn(this, 140));
+        sp.add(new Spawn(this, 80));
+        sp.add(new Spawn(this, 80));
+        sp.add(new Spawn(this, 80));
+        sp.add(new Spawn(this, 80));
+
+        sp.add(new Spawn(this, 1000));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 500));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+
+
+
+
 
         System.out.println("DEBUG: Size: " + sp.size());
         return sp;
@@ -622,7 +596,7 @@ public class Game implements Runnable {
                 ++this.boardAnimationState;
             else
                 --this.boardAnimationState;
-            updateBoardPosition();
+            //updateBoardPosition();
         }
     }
 
@@ -635,6 +609,7 @@ public class Game implements Runnable {
     }
 
     private void spawnBouncie(){
+
         if (this.spawnPool.size() > 0) {
             if (this.gameTicks == this.spawnPool.peek().get_ticks()) {
 
@@ -645,9 +620,13 @@ public class Game implements Runnable {
                 gameTicks = 0;
             }
         } else {
-            if (++this.passedChunks >= this.requiredPassedChunks)
+            if (++this.passedChunks >= this.requiredPassedChunks) {
                 ++this.difficulty;
+                ++this.level;
+                this.passedChunks = 0;
+            }
             fillSpawnPool();
+
         }
     }
 
@@ -734,7 +713,7 @@ public class Game implements Runnable {
 
 
     public void updateBoardPosition() {
-        Resources.WHALE.setBounds((int) getBoardXPos(), (int) getBoardYPos(), (int) getBoardWidthPos(), (int) getBoardHeightPos());
+        //Resources.WHALE.setBounds((int) getBoardXPos(), (int) getBoardYPos(), (int) getBoardWidthPos(), (int) getBoardHeightPos());
     }
 
     public boolean isTimeToExit() {
@@ -746,5 +725,9 @@ public class Game implements Runnable {
         this.lostGame = true;
         this.paused = true;
         Resources.soundManager.stopSound();
+    }
+
+    public int getLevel() {
+        return level;
     }
 }

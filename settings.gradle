@@ -1,1 +1,2 @@
 include ':kycklingstuds'
+include ':libraries:facebook'

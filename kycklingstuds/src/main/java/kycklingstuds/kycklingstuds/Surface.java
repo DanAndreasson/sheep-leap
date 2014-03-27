@@ -31,6 +31,7 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         mHolder.addCallback(this);
         mPaint = new Paint(Color.BLACK);
         mPaint.setColor(Color.BLACK);
+        mPaint.setStyle(Paint.Style.FILL);
         mPaint.setTextSize(50);
 
         mPaintPC = new Paint(Color.RED);
@@ -58,7 +59,7 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Resources.DEFAULT_BACKGROUND.setBounds(0, 0, getWidth(), getHeight());
-        Resources.WHALE.setBounds((int) game.getBoardXPos(), (int) game.getBoardYPos(), (int) game.getBoardWidthPos(), (int) game.getBoardHeightPos());
+       // Resources.WHALE.setBounds((int) game.getBoardXPos(), (int) game.getBoardYPos(), (int) game.getBoardWidthPos(), (int) game.getBoardHeightPos());
         thread = new Thread(this);
         thread.start();
         restartSurface();
@@ -80,10 +81,11 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         Resources.DEFAULT_BACKGROUND.draw(c);
 
         for (int i = 0; i < game.getLivesLeft(); ++i) {
-            c.drawBitmap(Resources.LIFE_LEFT, 50 + (50 * i), 50, mPaint);
+            c.drawBitmap(Resources.LIFE_LEFT, 50 + (50 * i), 50, null);
         }
         c.drawText(Integer.toString(game.getScore()) + "p", getWidth() - 155, 100, mPaint);
         c.drawText("Personal best: " + Integer.toString(Resources.HIGHSCORE.getHighscore().getPoints()) + "p", getWidth() - 230, 135, mPaintPC);
+        c.drawText("Level: " + Integer.toString(game.getLevel()), getWidth() - 230, 45, mPaint);
 
         pollCount = 0;
         synchronized (game.getActiveBouncies()) {
@@ -100,8 +102,7 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
             }
         }
 
-        Resources.WHALE.draw(c);
-
+        c.drawBitmap(Resources.WHALE, game.getBoardXPos(), game.getBoardYPos(), null);
         // c.drawLine(0, 250, 2000, 250, mPaint);
        /* for (int i = 0; i < game.pathSize(); ++i){
             c.drawOval(game.getWaypoint(i), mPaint);

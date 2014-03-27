@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="kycklingstuds.kycklingstuds"
+
     >
+
+    <uses-permission android:name="android.permission.INTERNET"/>
 
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
         android:theme="@android:style/Theme.NoTitleBar.Fullscreen" >
-
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/app_id" />
         <activity
             android:name="kycklingstuds.kycklingstuds.Loadingscreen"
             android:label="@string/app_name"
@@ -30,6 +35,9 @@
             android:label="@string/title_activity_play"
             android:screenOrientation="landscape">
         </activity>
+        <activity android:name="com.facebook.LoginActivity"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"
+            android:label="@string/app_name" />
 
 
 
