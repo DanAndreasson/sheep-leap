@@ -21,12 +21,18 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     private Game game;
     private boolean running;
     private int pollCount;
-
+    private View root;
 
     private Thread thread;
+    private Paint splashPaint;
+    private RectF splashPos;
+    private boolean shouldDrawText, hasInitializedText;
+
+    private Splashtext levelSplashText;
 
     public Surface(Context context, AttributeSet attrs) {
         super(context, attrs);
+
         mHolder = this.getHolder();
         mHolder.addCallback(this);
         mPaint = new Paint(Color.BLACK);
@@ -38,10 +44,14 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         mPaintPC.setColor(Color.RED);
         mPaintPC.setTextSize(25);
 
+        levelSplashText = new Splashtext(30, Color.RED,5000);
+
     }
 
     public void restartSurface() {
         running = true;
+        shouldDrawText = true;
+        hasInitializedText = false;
     }
 
     public void setGame(Game g) {
@@ -59,7 +69,9 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Resources.DEFAULT_BACKGROUND.setBounds(0, 0, getWidth(), getHeight());
-       // Resources.WHALE.setBounds((int) game.getBoardXPos(), (int) game.getBoardYPos(), (int) game.getBoardWidthPos(), (int) game.getBoardHeightPos());
+        levelSplashText.drawText("Bounce the sheep!");
+        // Resources.WHALE.setBounds((int) game.getBoardXPos(), (int) game.getBoardYPos(), (int) game.getBoardWidthPos(), (int) game.getBoardHeightPos());
+
         thread = new Thread(this);
         thread.start();
         restartSurface();
@@ -87,6 +99,10 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         c.drawText("Personal best: " + Integer.toString(Resources.HIGHSCORE.getHighscore().getPoints()) + "p", getWidth() - 230, 135, mPaintPC);
         c.drawText("Level: " + Integer.toString(game.getLevel()), getWidth() - 230, 45, mPaint);
 
+       /* if (shouldDrawText) {
+            drawText(c, "Hejsan Morja, fallerallera");
+        }*/
+
         pollCount = 0;
         synchronized (game.getActiveBouncies()) {
             for (Bouncy b : game.getActiveBouncies()) {
@@ -111,11 +127,31 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
 
     }
 
+/*
+    public void initText(String splashText) {
+        Rect areaRect = new Rect(0, 0, getWidth(), getHeight());
 
+        splashPos = new RectF(areaRect);
+        splashPos.right = splashPaint.measureText(splashText, 0, splashText.length());
+        splashPos.bottom = splashPaint.descent() - splashPaint.ascent();
+
+        splashPos.left += (areaRect.width() - splashPos.right) / 2.0f;
+        splashPos.top += ((areaRect.height() - splashPos.bottom) / 2.0f) * 0.40f;
+    }
+
+    public void drawText(Canvas c, String splashText) {
+        if (!hasInitializedText) {
+            initText(splashText);
+            hasInitializedText = true;
+        }
+        c.drawText(splashText, splashPos.left, splashPos.top - splashPaint.ascent(), splashPaint);
+    }
+
+*/
     @Override
     public void run() {
-        System.out.println("DEBUG: TimetoExit: "+ game.isTimeToExit()+" running: " + running + ". paused? " + game.isPaused());
-        while (!game.isTimeToExit() ) {
+        System.out.println("DEBUG: TimetoExit: " + game.isTimeToExit() + " running: " + running + ". paused? " + game.isPaused());
+        while (!game.isTimeToExit()) {
             while (running && !game.isPaused()) {
                 try {
                     mCanvas = mHolder.lockCanvas();

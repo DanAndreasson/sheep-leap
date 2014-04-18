@@ -16,11 +16,30 @@
         android:orientation="vertical"
         android:layout_width="300dp"
         android:layout_height="200dp"
+        android:weightSum="1"
+        android:layout_gravity="center"
+        android:alpha="0.8"
+        android:id="@+id/splashTextContainer">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/splashTextView"
+            android:layout_gravity="center_horizontal"
+            android:textAlignment="center"
+
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="300dp"
+        android:layout_height="200dp"
         android:alpha="0.8"
         android:weightSum="1"
         android:paddingTop="50dp"
         android:layout_gravity="center"
         android:id="@+id/retryContainer">
+
 
         <TextView
             android:layout_width="wrap_content"
@@ -58,5 +77,6 @@
                 android:onClick="exitToMenu"
                 android:background="@drawable/retrynobtn"/>
         </LinearLayout>
+
     </LinearLayout>
 </FrameLayout>

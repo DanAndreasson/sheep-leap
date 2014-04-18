@@ -3,8 +3,12 @@ package kycklingstuds.kycklingstuds;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -28,8 +32,25 @@ public class Loadingscreen extends FragmentActivity {
     }
 
     private void loadResources() {
-        Resources.DEFAULT_BACKGROUND = getResources().getDrawable(R.drawable.background_s3);
+       // Resources.DEFAULT_BACKGROUND = getResources().getDrawable(R.drawable.background_s3);
        // Resources.WHALE = getResources().getDrawable(R.drawable.whale);
+
+        Display display = getWindowManager().getDefaultDisplay();
+        int screen_width = display.getWidth();  // deprecated
+        int screen_height = display.getHeight();  // deprecated
+        //Resources.RAW_BACKGROUND = getResources().getDrawable(R.drawable.background_sky_mountains);
+
+        Resources.RAW_BACKGROUND = BitmapFactory.decodeResource(getResources(), R.drawable.background_sky_mountains);
+        Resources.RAW_BACKGROUND = Bitmap.createScaledBitmap(Resources.RAW_BACKGROUND, screen_width, screen_height, false);
+
+        Resources.PILLAR_LEFT = BitmapFactory.decodeResource(getResources(), R.drawable.plateu_left);
+        Resources.PILLAR_LEFT = Bitmap.createScaledBitmap(Resources.PILLAR_LEFT, 300, 600, false);
+
+        Resources.PILLAR_RIGHT = BitmapFactory.decodeResource(getResources(), R.drawable.plateu_right);
+        Resources.PILLAR_RIGHT = Bitmap.createScaledBitmap(Resources.PILLAR_RIGHT, 300, 500, false);
+
+        Resources.WATER = BitmapFactory.decodeResource(getResources(), R.drawable.water_mass);
+        Resources.WATER = Bitmap.createScaledBitmap(Resources.WATER, 1000, 400, false);
 
         Resources.WHALE = BitmapFactory.decodeResource(getResources(), R.drawable.whale);
         Resources.WHALE = Bitmap.createScaledBitmap(Resources.WHALE, 132, 84, false);
@@ -51,6 +72,28 @@ public class Loadingscreen extends FragmentActivity {
 
         Resources.SHEEP_FIVE = BitmapFactory.decodeResource(getResources(), R.drawable.sheep5);
         Resources.SHEEP_FIVE = Bitmap.createScaledBitmap(Resources.SHEEP_FIVE, 75, 75, false);
+
+        Resources.DEFAULT_BACKGROUND =  createBackground(screen_width, screen_height);
+    }
+
+    private Drawable createBackground(int screen_width, int screen_height){
+        Bitmap raw_background = Resources.RAW_BACKGROUND;
+        Bitmap pillar_left = Resources.PILLAR_LEFT;
+        Bitmap pillar_right = Resources.PILLAR_RIGHT;
+        Bitmap water = Resources.WATER;
+        try {
+
+            Canvas canvas = new Canvas(raw_background);
+            // JUST CHANGE TO DIFFERENT Bitmaps and coordinates .
+            canvas.drawBitmap(water, 230, screen_height-200, null);
+            canvas.drawBitmap(pillar_left, 0, screen_height-380, null);
+            canvas.drawBitmap(pillar_right, screen_width-300, screen_height-380, null);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return new BitmapDrawable(getResources(),raw_background);
     }
 
     private void loadSound(){
