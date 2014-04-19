@@ -1,5 +1,6 @@
 package kycklingstuds.kycklingstuds;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -14,7 +15,7 @@ public class PlayActivity extends FragmentActivity {
     private static Context mContext;
     private Surface mSurface;
     private Game mGame;
-
+    public static Activity playActivity;
     static LinearLayout mRetryContainer;
     static LinearLayout mSplashTextContainer;
     public static Context getContext() {
@@ -28,6 +29,7 @@ public class PlayActivity extends FragmentActivity {
         PlayActivity.mRetryContainer.setVisibility(View.GONE);
         mGame = new Game(this);
 
+        playActivity = this;
         mSurface = (Surface) findViewById(R.id.gameCanvas);
         mSurface.setOnTouchListener(mSurface);
         mSurface.setGame(mGame);

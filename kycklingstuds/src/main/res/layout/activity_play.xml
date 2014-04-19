@@ -26,6 +26,7 @@
             android:id="@+id/splashTextView"
             android:layout_gravity="center_horizontal"
             android:textAlignment="center"
+            android:fontFamily="@string/abc_activity_chooser_view_see_all"
 
             />
     </LinearLayout>

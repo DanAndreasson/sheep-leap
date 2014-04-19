@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.graphics.RectF;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
+import android.view.WindowManager;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
@@ -11,11 +12,13 @@ import java.util.Queue;
 
 public class Game implements Runnable {
 
+
     // Instance Variables
     private int playerID;
     private int score;
     private int highscore; // Load from local database or sync with server DB?
     private boolean paused;
+    private boolean highscoreAnnounced;
     private int livesLeft;
 
     private float boardXPos;
@@ -58,6 +61,7 @@ public class Game implements Runnable {
 
     private boolean spawnedFirst;
     private Splashtext chunkSplashText;
+    private Splashtext highscoreSplashText;
     // Constructor
     public Game(FragmentActivity fa) {
         this.playActivity = fa;
@@ -74,12 +78,12 @@ public class Game implements Runnable {
 
         this.activeBouncies = new LinkedList<Bouncy>();
         this.spawnPool = new LinkedList<Spawn>();
-
         restartGame();
 
     }
 
     public void restartGame() {
+        playActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         this.lostGame = false;
 
         this.livesLeft = 4;
@@ -107,8 +111,10 @@ public class Game implements Runnable {
         this.spawnPool.clear();
         this.activeBouncies.clear();
         this.spawnedFirst = false;
+        this.highscoreAnnounced = false;
         this.gameTicks = 0;
 
+        highscoreSplashText = new Splashtext(30, Color.YELLOW, 5000, playActivity);
         chunkSplashText = new Splashtext(30, Color.RED,5000, playActivity);
         fillSpawnPool();
     }//tjA morja. Fuck that.
@@ -344,11 +350,9 @@ public class Game implements Runnable {
         else if (rand >= 9 && rand < 12){
             sp.add(new Spawn(this, 200));
             sp.add(new Spawn(this, 10));
-            sp.add(new Spawn(this, 10));
         }
         else if (rand >= 12 && rand < 16){
             sp.add(new Spawn(this, 400));
-            sp.add(new Spawn(this, 10));
             sp.add(new Spawn(this, 10));
         }//GTFO
         else if (rand >= 16 && rand < 20){
@@ -389,9 +393,9 @@ public class Game implements Runnable {
         }
         else if (rand >= 12 && rand < 16){
             sp.add(new Spawn(this, 600));
-            sp.add(new Spawn(this, 30));
-            sp.add(new Spawn(this, 30));
-            sp.add(new Spawn(this, 30));
+            sp.add(new Spawn(this, 8));
+            sp.add(new Spawn(this, 8));
+            sp.add(new Spawn(this, 8));
 
         }//GTFO
         else if (rand >= 16 && rand < 20){
@@ -458,7 +462,30 @@ public class Game implements Runnable {
     private Queue<Spawn> chunkFive() {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
-
+        sp.add(new Spawn(this, 100));
+        int rand = randomNrRange(1, 20);
+        if(rand < 3) {
+            sp.add(new Spawn(this, 200));
+        }
+        else if (rand >= 3 && rand < 6){
+            sp.add(new Spawn(this, 400));
+        }
+        else if (rand >= 6 && rand < 9){
+            sp.add(new Spawn(this, 300));
+        }
+        else if (rand >= 9 && rand < 12){
+            sp.add(new Spawn(this, 200));
+            sp.add(new Spawn(this, 10));
+        }
+        else if (rand >= 12 && rand < 16){
+            sp.add(new Spawn(this, 400));
+            sp.add(new Spawn(this, 10));
+        }//GTFO
+        else if (rand >= 16 && rand < 20){
+            sp.add(new Spawn(this, 100));
+        }
+        return sp;
+/*
         sp.add(new Spawn(this, 1200));
         sp.add(new Spawn(this, 40));
         sp.add(new Spawn(this, 40));
@@ -485,11 +512,7 @@ public class Game implements Runnable {
         sp.add(new Spawn(this, 30));
         sp.add(new Spawn(this, 30));
         sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-
-
-        System.out.println("DEBUG: Size: " + sp.size());
-        return sp;
+        sp.add(new Spawn(this, 30));*/
 
     }
 
@@ -562,30 +585,30 @@ public class Game implements Runnable {
     private Queue<Spawn> chunkSeven() {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
-        sp.add(new Spawn(this, 1200));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 300));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 100));
+        int rand = randomNrRange(1, 20);//FITTLAAr d
+        if(rand < 3) {
+            sp.add(new Spawn(this, 200));
+        }
+        else if (rand >= 3 && rand < 6){
+            sp.add(new Spawn(this, 400));
+        }
+        else if (rand >= 6 && rand < 9){
+            sp.add(new Spawn(this, 300));
+        }
+        else if (rand >= 9 && rand < 12){
+            sp.add(new Spawn(this, 200));
+            sp.add(new Spawn(this, 10));
+            sp.add(new Spawn(this, 10));
+        }
+        else if (rand >= 12 && rand < 16){
+            sp.add(new Spawn(this, 400));
+            sp.add(new Spawn(this, 10));
+            sp.add(new Spawn(this, 10));
+        }//GTFO
+        else if (rand >= 16 && rand < 20){
+            sp.add(new Spawn(this, 100));
+        }
 
 
         return sp;
@@ -597,38 +620,30 @@ public class Game implements Runnable {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
 
-        sp.add(new Spawn(this, 1200));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 500));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 500));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 500));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
-        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 100));
+        int rand = randomNrRange(1, 20);//FITTLAAr d
+        if(rand < 3) {
+            sp.add(new Spawn(this, 200));
+        }
+        else if (rand >= 3 && rand < 6){
+            sp.add(new Spawn(this, 400));
+        }
+        else if (rand >= 6 && rand < 9){
+            sp.add(new Spawn(this, 300));
+        }
+        else if (rand >= 9 && rand < 12){
+            sp.add(new Spawn(this, 200));
+            sp.add(new Spawn(this, 10));
+            sp.add(new Spawn(this, 10));
+        }
+        else if (rand >= 12 && rand < 16){
+            sp.add(new Spawn(this, 400));
+            sp.add(new Spawn(this, 10));
+            sp.add(new Spawn(this, 10));
+        }//GTFO
+        else if (rand >= 16 && rand < 20){
+            sp.add(new Spawn(this, 100));
+        }
 
 
         System.out.println("DEBUG: Size: " + sp.size());
@@ -640,34 +655,30 @@ public class Game implements Runnable {
     private Queue<Spawn> chunkNine() {
         Queue<Spawn> sp = new LinkedList<Spawn>();
 
-        sp.add(new Spawn(this, 1200));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
-        sp.add(new Spawn(this, 150));
+        sp.add(new Spawn(this, 100));
+        int rand = randomNrRange(1, 20);//FITTLAAr d
+        if(rand < 3) {
+            sp.add(new Spawn(this, 200));
+        }
+        else if (rand >= 3 && rand < 6){
+            sp.add(new Spawn(this, 400));
+        }
+        else if (rand >= 6 && rand < 9){
+            sp.add(new Spawn(this, 300));
+        }
+        else if (rand >= 9 && rand < 12){
+            sp.add(new Spawn(this, 200));
+            sp.add(new Spawn(this, 10));
+            sp.add(new Spawn(this, 10));
+        }
+        else if (rand >= 12 && rand < 16){
+            sp.add(new Spawn(this, 400));
+            sp.add(new Spawn(this, 10));
+            sp.add(new Spawn(this, 10));
+        }//GTFO
+        else if (rand >= 16 && rand < 20){
+            sp.add(new Spawn(this, 100));
+        }
 
 
         return sp;
@@ -871,6 +882,9 @@ public class Game implements Runnable {
 
 
                 this.passedChunks = 0;
+                if(difficulty > 9){
+                    difficulty = 1;
+                }
             }
             fillSpawnPool();
 
@@ -910,6 +924,7 @@ public class Game implements Runnable {
         boolean c = (bounceXLeft >= getBoardXPos() && bounceXLeft <= getBoardWidthPos() ||
                 (bounceXRight >= getBoardXPos() && bounceXRight <= getBoardWidthPos()));
 
+        //c = true; For immortality
         if (c) {
             ++this.boardAnimationState;
             this.boardAnimationDownwards = true;
@@ -919,8 +934,12 @@ public class Game implements Runnable {
     }
 
     public void receiveScore() {
+        int high_score =  Resources.HIGHSCORE.getHighscore().getPoints();
         ++this.score;
-
+        if(this.score > high_score && !highscoreAnnounced ){
+            highscoreSplashText.drawText("New Highscore!!!");
+            highscoreAnnounced = true;
+        }
     }
 
     public int getFirstDeathPoint() {

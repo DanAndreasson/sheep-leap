@@ -43,9 +43,6 @@ public class FBFragment extends Fragment {
     private static final List<String> PERMISSIONS = Arrays.asList("basic_info, publish_actions");
 
     private static String message = "Sheep Leap";
-    private WebDialog dialog;
-    private String dialogAction;
-    private Bundle dialogParams;
 
     @Override
     public View onCreateView(LayoutInflater inflater,

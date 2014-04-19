@@ -24,11 +24,7 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     private View root;
 
     private Thread thread;
-    private Paint splashPaint;
-    private RectF splashPos;
-    private boolean shouldDrawText, hasInitializedText;
 
-    private Splashtext levelSplashText;
 
     public Surface(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -49,8 +45,6 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
 
     public void restartSurface() {
         running = true;
-        shouldDrawText = true;
-        hasInitializedText = false;
     }
 
     public void setGame(Game g) {
@@ -86,6 +80,7 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
 
     }
 
+
     @Override
     public void onDraw(Canvas c) {
         Resources.DEFAULT_BACKGROUND.draw(c);
@@ -93,9 +88,11 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         for (int i = 0; i < game.getLivesLeft(); ++i) {
             c.drawBitmap(Resources.LIFE_LEFT, 50 + (50 * i), 50, null);
         }
+
         c.drawText(Integer.toString(game.getScore()) + "p", getWidth() - 155, 100, mPaint);
         c.drawText("Personal best: " + Integer.toString(Resources.HIGHSCORE.getHighscore().getPoints()) + "p", getWidth() - 230, 135, mPaintPC);
         c.drawText("Level: " + Integer.toString(game.getLevel()), getWidth() - 230, 45, mPaint);
+
 
        /* if (shouldDrawText) {
             drawText(c, "Hejsan Morja, fallerallera");
