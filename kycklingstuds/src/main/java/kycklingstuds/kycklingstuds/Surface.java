@@ -44,7 +44,6 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         mPaintPC.setColor(Color.RED);
         mPaintPC.setTextSize(25);
 
-        levelSplashText = new Splashtext(30, Color.RED,5000);
 
     }
 
@@ -69,7 +68,6 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
         Resources.DEFAULT_BACKGROUND.setBounds(0, 0, getWidth(), getHeight());
-        levelSplashText.drawText("Bounce the sheep!");
         // Resources.WHALE.setBounds((int) game.getBoardXPos(), (int) game.getBoardYPos(), (int) game.getBoardWidthPos(), (int) game.getBoardHeightPos());
 
         thread = new Thread(this);

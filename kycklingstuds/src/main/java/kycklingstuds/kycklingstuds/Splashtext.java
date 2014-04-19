@@ -7,20 +7,18 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
-public class Splashtext extends Activity {
-    private String splashText;
+public class Splashtext extends Thread {
     private int size;
     private int color;
     private int time;
-    private boolean hasInitializedText;
-    // private TextSwitcher mSwitcher;
     private TextView mTextView;
+    private Activity mActivity;
 
-    public Splashtext(int size, int color, int time) {
+    public Splashtext(int size, int color, int time, Activity activity) {
         this.size = size;
         this.time = time;
         this.color = color;
-        hasInitializedText = false;
+        mActivity = activity;
         System.out.println("DEBUG: Created new splashtext");
     }
 
@@ -42,7 +40,7 @@ public class Splashtext extends Activity {
 
     public void drawText(final String text) {
 
-        runOnUiThread(new Runnable() {
+        mActivity.runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 mTextView = (TextView) PlayActivity.mSplashTextContainer.findViewById(R.id.splashTextView);

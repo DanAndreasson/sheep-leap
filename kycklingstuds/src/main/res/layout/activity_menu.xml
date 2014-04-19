@@ -27,7 +27,7 @@
         android:orientation="vertical"
         android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="80dp"
+        android:layout_marginTop="70dp"
 
         android:id="@+id/linearLayout"
         android:layout_gravity="center">
@@ -73,6 +73,12 @@
     </LinearLayout>
 
 
+    <com.facebook.widget.LoginButton
+        android:id="@+id/fb_login_button"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:layout_gravity="center_horizontal|bottom" />
+
     <Button
         style="@style/Widget.AppCompat.ActionBar.TabText"
         android:layout_width="125dp"
@@ -82,13 +88,18 @@
         android:background="@android:color/darker_gray"
         android:textSize="20dp"
         android:layout_marginBottom="1dp"
-        android:layout_gravity="right|bottom" />
+        android:layout_gravity="right|top" />
 
-    <com.facebook.widget.LoginButton
-        android:id="@+id/fb_login_button"
-        android:layout_width="wrap_content"
-        android:layout_height="45dp"
-        android:layout_gravity="center_horizontal|bottom" />
+    <Button
+        style="@style/Widget.AppCompat.ActionBar.TabText"
+        android:layout_width="125dp"
+        android:layout_height="40dp"
+        android:text="Update"
+        android:id="@+id/updateStatusButton"
+        android:background="@android:color/darker_gray"
+        android:textSize="20dp"
+        android:layout_marginBottom="1dp"
+        android:layout_gravity="right|bottom" />
 
 
 </FrameLayout>

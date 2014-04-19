@@ -56,7 +56,6 @@ public class Game implements Runnable {
     private boolean timeToExit;
     private int level;
 
-    private Splashtext levelSplashText;
     private boolean spawnedFirst;
     private Splashtext chunkSplashText;
     // Constructor
@@ -110,7 +109,7 @@ public class Game implements Runnable {
         this.spawnedFirst = false;
         this.gameTicks = 0;
 
-        chunkSplashText = new Splashtext(30, Color.RED,5000);
+        chunkSplashText = new Splashtext(30, Color.RED,5000, playActivity);
         fillSpawnPool();
     }//tjA morja. Fuck that.
 

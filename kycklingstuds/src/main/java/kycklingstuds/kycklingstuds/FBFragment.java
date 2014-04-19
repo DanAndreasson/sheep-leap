@@ -19,6 +19,7 @@ import com.facebook.Session;
 import com.facebook.SessionState;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
+import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.LoginButton;
 
 import java.util.Arrays;
@@ -29,6 +30,7 @@ public class FBFragment extends Fragment {
     private LoginButton loginBtn;
     private Button postImageBtn;
     private Button updateStatusBtn;
+    private Button shareAppBtn;
 
     private TextView userName;
 
@@ -37,6 +39,7 @@ public class FBFragment extends Fragment {
     private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
 
     private static String message = "Sheep Leap";
+
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container,
@@ -50,14 +53,14 @@ public class FBFragment extends Fragment {
             @Override
             public void onUserInfoFetched(GraphUser user) {
                 if (user != null) {
-                    userName.setText("Hello, " + user.getName());
+                    userName.setText("User: " + user.getName());
                 } else {
-                    userName.setText("You are not logged");
+                    userName.setText("Not logged in.");
                 }
             }
         });
 
-        updateStatusBtn = (Button) view.findViewById(R.id.shareStatusButton);
+        updateStatusBtn = (Button) view.findViewById(R.id.updateStatusButton);
         updateStatusBtn.setOnClickListener(new View.OnClickListener() {
 
             @Override
@@ -65,18 +68,37 @@ public class FBFragment extends Fragment {
                 postStatusMessage();
             }
         });
+
+        shareAppBtn = (Button) view.findViewById(R.id.shareStatusButton);
+        shareAppBtn.setOnClickListener(new View.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                if (FacebookDialog.canPresentShareDialog(v.getContext(),
+                        FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
+                    // Publish the post using the Share Dialog
+                    FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(getActivity())
+                            .setLink("https://developers.facebook.com/android")
+                            .build();
+                    uiHelper.trackPendingDialogCall(shareDialog.present());
+
+                } else {
+                    // Fallback. For example, publish the post using the Feed Dialog
+                }
+            }
+        });
+
+
         buttonsEnabled(false);
         return view;
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         uiHelper = new UiLifecycleHelper(getActivity(), statusCallback);
         uiHelper.onCreate(savedInstanceState);
-
-
-
 
 
     }
@@ -111,7 +133,8 @@ public class FBFragment extends Fragment {
                                     "Photo uploaded successfully",
                                     Toast.LENGTH_LONG).show();
                         }
-                    });
+                    }
+            );
             uploadRequest.executeAsync();
         } else {
             requestPermissions();
@@ -130,7 +153,8 @@ public class FBFragment extends Fragment {
                                         "Status updated successfully",
                                         Toast.LENGTH_LONG).show();
                         }
-                    });
+                    }
+            );
             request.executeAsync();
         } else {
             requestPermissions();
@@ -174,7 +198,18 @@ public class FBFragment extends Fragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        uiHelper.onActivityResult(requestCode, resultCode, data);
+
+        uiHelper.onActivityResult(requestCode, resultCode, data, new FacebookDialog.Callback() {
+            @Override
+            public void onError(FacebookDialog.PendingCall pendingCall, Exception error, Bundle data) {
+                Log.e("Activity", String.format("Error: %s", error.toString()));
+            }
+
+            @Override
+            public void onComplete(FacebookDialog.PendingCall pendingCall, Bundle data) {
+                Log.i("Activity", "Success!");
+            }
+        });
     }
 
     @Override
