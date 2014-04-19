@@ -1,166 +1,180 @@
 package kycklingstuds.kycklingstuds;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
+import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
-import com.facebook.LoggingBehavior;
+import com.facebook.Request;
+import com.facebook.Response;
 import com.facebook.Session;
 import com.facebook.SessionState;
-import com.facebook.Settings;
 import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
+import com.facebook.widget.LoginButton;
+import com.facebook.widget.LoginButton.UserInfoChangedCallback;
 
-public class MainFragment extends Fragment {
-    private static final String URL_PREFIX_FRIENDS = "https://graph.facebook.com/me/friends?access_token=";
+import java.util.Arrays;
+import java.util.List;
+
+public class MainFragment extends FragmentActivity {
+
+    private LoginButton loginBtn;
+    private Button postImageBtn;
+    private Button updateStatusBtn;
+
+    private TextView userName;
+
     private UiLifecycleHelper uiHelper;
-    private TextView textInstructionsOrLink;
-    private Button buttonLoginLogout;
-    private Session.StatusCallback statusCallback = new SessionStatusCallback();
-    private GraphUser graphUser;
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.activity_menu, container, false);
+    private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
 
-        buttonLoginLogout = (Button) view.findViewById(R.id.authButton);
-        textInstructionsOrLink = (TextView) view.findViewById(R.id.textView2);
-        Settings.addLoggingBehavior(LoggingBehavior.INCLUDE_ACCESS_TOKENS);
-
-        Session session = Session.getActiveSession();
-
-        if (session == null) {
-            if (savedInstanceState != null) {
-                session = Session.restoreSession(getActivity(), null, statusCallback, savedInstanceState);
-            }
-            if (session == null) {
-                session = new Session(getActivity());
-            }
-            Session.setActiveSession(session);
-            if (session.getState().equals(SessionState.CREATED_TOKEN_LOADED)) {
-                session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
-            }
-        }
-
-        updateView();
-
-        return view;
-    }
+    private static String message = "Sample status posted from android app";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        uiHelper = new UiLifecycleHelper(getActivity(), statusCallback);
+
+        uiHelper = new UiLifecycleHelper(this, statusCallback);
         uiHelper.onCreate(savedInstanceState);
-    }
-    @Override
-    public void onStart() {
-        super.onStart();
-        Session.getActiveSession().addCallback(statusCallback);
 
+        setContentView(R.layout.activity_menu);
+
+        userName = (TextView) findViewById(R.id.user_name);
+        loginBtn = (LoginButton) findViewById(R.id.fb_login_button);
+        loginBtn.setUserInfoChangedCallback(new UserInfoChangedCallback() {
+            @Override
+            public void onUserInfoFetched(GraphUser user) {
+                if (user != null) {
+                    userName.setText("Hello, " + user.getName());
+                } else {
+                    userName.setText("You are not logged");
+                }
+            }
+        });
+
+        updateStatusBtn = (Button) findViewById(R.id.shareStatusButton);
+        updateStatusBtn.setOnClickListener(new OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+        buttonsEnabled(false);
     }
 
-    @Override
-    public void onStop() {
-        super.onStop();
-        Session.getActiveSession().removeCallback(statusCallback);
-        uiHelper.onStop();
-    }
-
-    private void onSessionStateChange(Session session, SessionState state, Exception exception) {
-        if (state.isOpened()) {
-            System.out.println("DEBUG: Logged in...");
-        } else if (state.isClosed()) {
-            System.out.println("DEBUG: Logged out...");
+    private Session.StatusCallback statusCallback = new Session.StatusCallback() {
+        @Override
+        public void call(Session session, SessionState state,
+                         Exception exception) {
+            if (state.isOpened()) {
+                buttonsEnabled(true);
+                Log.d("FacebookSampleActivity", "Facebook session opened");
+            } else if (state.isClosed()) {
+                buttonsEnabled(false);
+                Log.d("FacebookSampleActivity", "Facebook session closed");
+            }
         }
-        else
-            System.out.println("DEBUG: Session: " + session.toString());
+    };
+
+    public void buttonsEnabled(boolean isEnabled) {
+        postImageBtn.setEnabled(isEnabled);
+        updateStatusBtn.setEnabled(isEnabled);
     }
+
+    public void postImage() {
+        if (checkPermissions()) {
+            Bitmap img = BitmapFactory.decodeResource(getResources(),
+                    R.drawable.ic_launcher);
+            Request uploadRequest = Request.newUploadPhotoRequest(
+                    Session.getActiveSession(), img, new Request.Callback() {
+                        @Override
+                        public void onCompleted(Response response) {
+                            Toast.makeText(MainFragment.this,
+                                    "Photo uploaded successfully",
+                                    Toast.LENGTH_LONG).show();
+                        }
+                    });
+            uploadRequest.executeAsync();
+        } else {
+            requestPermissions();
+        }
+    }
+
+    public void postStatusMessage() {
+        if (checkPermissions()) {
+            Request request = Request.newStatusUpdateRequest(
+                    Session.getActiveSession(), message,
+                    new Request.Callback() {
+                        @Override
+                        public void onCompleted(Response response) {
+                            if (response.getError() == null)
+                                Toast.makeText(MainFragment.this,
+                                        "Status updated successfully",
+                                        Toast.LENGTH_LONG).show();
+                        }
+                    });
+            request.executeAsync();
+        } else {
+            requestPermissions();
+        }
+    }
+
+    public boolean checkPermissions() {
+        Session s = Session.getActiveSession();
+        if (s != null) {
+            return s.getPermissions().contains("publish_actions");
+        } else
+            return false;
+    }
+
+    public void requestPermissions() {
+        Session s = Session.getActiveSession();
+        if (s != null)
+            s.requestNewPublishPermissions(new Session.NewPermissionsRequest(
+                    this, PERMISSIONS));
+    }
+
     @Override
     public void onResume() {
         super.onResume();
-        Session session = Session.getActiveSession();
-        session.addCallback(statusCallback);
-        if (session != null &&
-                (session.isOpened() || session.isClosed()) ) {
-            onSessionStateChange(session, session.getState(), null);
-        }
-
         uiHelper.onResume();
-        updateUI();
+        buttonsEnabled(Session.getActiveSession().isOpened());
     }
-    private void updateUI() {
-        if (graphUser != null) {
-            System.out.println("DEBUG: USER: " + graphUser.getFirstName());
-        }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        uiHelper.onPause();
     }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        uiHelper.onDestroy();
+    }
+
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        Session.getActiveSession().onActivityResult(getActivity(), requestCode, resultCode, data);
         uiHelper.onActivityResult(requestCode, resultCode, data);
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Session session = Session.getActiveSession();
-        Session.saveSession(session, outState);
+    public void onSaveInstanceState(Bundle savedState) {
+        super.onSaveInstanceState(savedState);
+        uiHelper.onSaveInstanceState(savedState);
     }
 
-    private void updateView() {
-        Session session = Session.getActiveSession();
-        if (session.isOpened()) {
-            textInstructionsOrLink.setText(URL_PREFIX_FRIENDS + session.getAccessToken());
-            buttonLoginLogout.setText("Logout");
-            System.out.println("DEBUG: SESSION IS NOW OPEN YO");
-            buttonLoginLogout.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) { onClickLogout(); }
-            });
-        } else {
-            textInstructionsOrLink.setText(R.string.com_facebook_loginview_logged_in_as);
-            buttonLoginLogout.setText("Login");
-            System.out.println("DEBUG: SESSION IS CLOSED");
-            buttonLoginLogout.setOnClickListener(new View.OnClickListener() {
-                public void onClick(View view) { onClickLogin(); }
-            });
-        }
-    }
-
-
-
-    private void onClickLogin() {
-
-
-        Session session = Session.getActiveSession();
-        System.out.println("DEBUG: Facebook login click");
-        if (!session.isOpened() && !session.isClosed()) {
-            session.openForRead(new Session.OpenRequest(this).setCallback(statusCallback));
-
-        } else {
-            Session.openActiveSession(getActivity(), this, true, statusCallback);
-        }
-    }
-
-    private void onClickLogout() {
-        System.out.println("DEBUG: Facebook logout click");
-        Session session = Session.getActiveSession();
-        if (!session.isClosed()) {
-            session.closeAndClearTokenInformation();
-        }
-    }
-
-    private class SessionStatusCallback implements Session.StatusCallback {
-        @Override
-        public void call(Session session, SessionState state, Exception exception) {
-            updateView();
-        }
-    }
 }
 
 /*import android.view.View;
@@ -354,5 +368,6 @@ public class MainFragment extends android.support.v4.app.Fragment {
         super.onSaveInstanceState(outState);
         uiHelper.onSaveInstanceState(outState);
     }
-*/
+    */
+
 
