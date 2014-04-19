@@ -79,27 +79,55 @@
         android:layout_height="50dp"
         android:layout_gravity="center_horizontal|bottom" />
 
-    <Button
-        style="@style/Widget.AppCompat.ActionBar.TabText"
-        android:layout_width="125dp"
-        android:layout_height="40dp"
-        android:text="Share"
-        android:id="@+id/shareStatusButton"
-        android:background="@android:color/darker_gray"
-        android:textSize="20dp"
-        android:layout_marginBottom="1dp"
-        android:layout_gravity="right|top" />
+    <RelativeLayout
+        android:orientation="horizontal"
+        android:layout_width="128dp"
+        android:layout_height="163dp"
+        android:layout_gravity="right|bottom">
 
-    <Button
-        style="@style/Widget.AppCompat.ActionBar.TabText"
-        android:layout_width="125dp"
-        android:layout_height="40dp"
-        android:text="Update"
-        android:id="@+id/updateStatusButton"
-        android:background="@android:color/darker_gray"
-        android:textSize="20dp"
-        android:layout_marginBottom="1dp"
-        android:layout_gravity="right|bottom" />
+        <Button
+            style="@style/Widget.AppCompat.ActionBar.TabText"
+            android:layout_width="125dp"
+            android:layout_height="40dp"
+            android:text="Update"
+            android:id="@+id/updateStatusButton"
+            android:background="@android:color/darker_gray"
+            android:textSize="20dp"
+            android:layout_marginBottom="1dp"
+            android:layout_gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="122dp" />
+
+        <Button
+            style="@style/Widget.AppCompat.ActionBar.TabText"
+            android:layout_width="125dp"
+            android:layout_height="40dp"
+            android:text="Invite"
+            android:id="@+id/inviteFriendButton"
+            android:background="@android:color/darker_gray"
+            android:textSize="20dp"
+            android:layout_gravity="center"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="false"
+            android:layout_alignParentStart="false" />
+
+        <Button
+            style="@style/Widget.AppCompat.ActionBar.TabText"
+            android:layout_width="125dp"
+            android:layout_height="40dp"
+            android:text="Share"
+            android:id="@+id/shareStatusButton"
+            android:background="@android:color/darker_gray"
+            android:textSize="20dp"
+            android:layout_gravity="right|top"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true" />
+
+    </RelativeLayout>
 
 
 </FrameLayout>

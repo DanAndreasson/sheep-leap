@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.FacebookException;
+import com.facebook.FacebookOperationCanceledException;
 import com.facebook.Request;
 import com.facebook.Response;
 import com.facebook.Session;
@@ -21,6 +23,7 @@ import com.facebook.UiLifecycleHelper;
 import com.facebook.model.GraphUser;
 import com.facebook.widget.FacebookDialog;
 import com.facebook.widget.LoginButton;
+import com.facebook.widget.WebDialog;
 
 import java.util.Arrays;
 import java.util.List;
@@ -31,14 +34,18 @@ public class FBFragment extends Fragment {
     private Button postImageBtn;
     private Button updateStatusBtn;
     private Button shareAppBtn;
+    private Button inviteFriendBtn;
 
     private TextView userName;
 
     private UiLifecycleHelper uiHelper;
 
-    private static final List<String> PERMISSIONS = Arrays.asList("publish_actions");
+    private static final List<String> PERMISSIONS = Arrays.asList("basic_info, publish_actions");
 
     private static String message = "Sheep Leap";
+    private WebDialog dialog;
+    private String dialogAction;
+    private Bundle dialogParams;
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -47,6 +54,7 @@ public class FBFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_menu, container, false);
 
         userName = (TextView) view.findViewById(R.id.user_name);
+
         loginBtn = (LoginButton) view.findViewById(R.id.fb_login_button);
         loginBtn.setFragment(this);
         loginBtn.setUserInfoChangedCallback(new LoginButton.UserInfoChangedCallback() {
@@ -69,22 +77,32 @@ public class FBFragment extends Fragment {
             }
         });
 
+
         shareAppBtn = (Button) view.findViewById(R.id.shareStatusButton);
         shareAppBtn.setOnClickListener(new View.OnClickListener() {
-
             @Override
             public void onClick(View v) {
                 if (FacebookDialog.canPresentShareDialog(v.getContext(),
                         FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
                     // Publish the post using the Share Dialog
                     FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(getActivity())
-                            .setLink("https://developers.facebook.com/android")
+                            .setLink("https://developers.facebook.com/android") //Link to our app
+                            .setDescription("My highscore is " + Integer.toString(Resources.HIGHSCORE.getHighscore().getPoints()) + " points. Can you beat me?")
+                            .setName("Sheep Leap")
                             .build();
                     uiHelper.trackPendingDialogCall(shareDialog.present());
 
                 } else {
-                    // Fallback. For example, publish the post using the Feed Dialog
+
                 }
+            }
+        });
+
+        inviteFriendBtn = (Button) view.findViewById(R.id.inviteFriendButton);
+        inviteFriendBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                inviteFriend();
             }
         });
 
@@ -121,6 +139,7 @@ public class FBFragment extends Fragment {
         updateStatusBtn.setEnabled(isEnabled);
     }
 
+    //Future uses?
     public void postImage() {
         if (checkPermissions()) {
             Bitmap img = BitmapFactory.decodeResource(getResources(),
@@ -160,6 +179,85 @@ public class FBFragment extends Fragment {
             requestPermissions();
         }
     }
+
+    private void inviteFriend() {
+        Bundle params = new Bundle();
+        params.putString("message", "My highscore is " + Integer.toString(Resources.HIGHSCORE.getHighscore().getPoints()) + " points. Can you beat me?");
+
+        WebDialog requestsDialog = (
+                new WebDialog.RequestsDialogBuilder(getActivity(),
+                        Session.getActiveSession(),
+                        params))
+                .setOnCompleteListener(new WebDialog.OnCompleteListener() {
+
+                    @Override
+                    public void onComplete(Bundle values,
+                                           FacebookException error) {
+                        if (error != null) {
+                            if (error instanceof FacebookOperationCanceledException) {
+                                Toast.makeText(getActivity().getApplicationContext(),
+                                        "Request cancelled",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity().getApplicationContext(),
+                                        "Network Error",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        } else {
+                            final String requestId = values.getString("request");
+                            if (requestId != null) {
+                                Toast.makeText(getActivity().getApplicationContext(),
+                                        "Request sent",
+                                        Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(getActivity().getApplicationContext(),
+                                        "Request cancelled",
+                                        Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+
+                })
+                .build();
+        requestsDialog.show();
+    }
+
+  /*  private void sendRequestDialog() {
+        Bundle params = new Bundle();
+        params.putString("title", "Invite Friend");
+        params.putString("message", " has invited you to try out Sheep Leap: The most awesome gaming experience of all time. " +
+                " Download now on your Android device!");
+        // comma seperated list of facebook IDs to preset the recipients. If left out, it will show a Friend Picker.
+        params.putString("to", "");  // your friend id
+
+        WebDialog requestsDialog = ( new WebDialog.RequestsDialogBuilder(getActivity(),
+                Session.getActiveSession(), params)).setOnCompleteListener(new WebDialog.OnCompleteListener() {
+            @Override
+            public void onComplete(Bundle values, FacebookException error) {
+                //   Auto-generated method stub
+                if (error != null) {
+                    if (error instanceof FacebookOperationCanceledException) {
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "Request cancelled", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "Network Error",  Toast.LENGTH_SHORT).show();
+                    }
+                } else {
+                    final String requestId = values.getString("request");
+                    if (requestId != null) {
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "Request sent",  Toast.LENGTH_SHORT).show();
+                        Log.i("TAG", " Sent facebook invite ");
+                    } else {
+                        Toast.makeText(getActivity().getApplicationContext(),
+                                "Request cancelled", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+        }).build();
+        requestsDialog.show();
+    }*/
 
     public boolean checkPermissions() {
         Session s = Session.getActiveSession();
