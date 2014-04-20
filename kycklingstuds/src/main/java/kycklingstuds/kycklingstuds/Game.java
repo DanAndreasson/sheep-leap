@@ -961,6 +961,17 @@ public class Game implements Runnable {
         }
     }
 
+    public void pauseNplayGame(){
+        if(this.paused == false) {
+            this.lostGame = true;
+            this.paused = true;
+        }
+        else{
+            this.lostGame = false;
+            this.paused = false;
+        }
+    }
+
     public void gameOver() {
         this.lostGame = true;
         this.paused = true;
@@ -990,6 +1001,10 @@ public class Game implements Runnable {
         this.timeToExit = true;
         this.lostGame = true;
         this.paused = true;
+        if (this.score > 0) {
+            Resources.HIGHSCORE.createScore(this.score);
+            Resources.HIGHSCORE.newHighScore();
+        }
         Resources.soundManager.stopSound();
     }
 
