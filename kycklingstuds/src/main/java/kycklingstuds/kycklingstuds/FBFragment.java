@@ -83,7 +83,7 @@ public class FBFragment extends Fragment {
                         FacebookDialog.ShareDialogFeature.SHARE_DIALOG)) {
                     // Publish the post using the Share Dialog
                     FacebookDialog shareDialog = new FacebookDialog.ShareDialogBuilder(getActivity())
-                            .setLink("https://developers.facebook.com/android") //Link to our app
+                            .setLink("http://www.danandreasson.se/") //Link to our app
                             .setDescription("My highscore is " + Integer.toString(Resources.HIGHSCORE.getHighscore().getPoints()) + " points. Can you beat me?")
                             .setName("Sheep Leap")
                             .build();
