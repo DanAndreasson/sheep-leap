@@ -22,6 +22,7 @@ public class PlayActivity extends FragmentActivity {
     static LinearLayout mSplashTextContainer;
 
     boolean is_paused = false;
+
     public static Context getContext() {
         //  return instance.getApplicationContext();
         return mContext;
@@ -59,12 +60,12 @@ public class PlayActivity extends FragmentActivity {
     @TargetApi(14)
     public void pauseBtnClicked(View v){
         Button pauseBtn = (Button)findViewById(R.id.pauseButton);
-        if(!is_paused){
+        if(!is_paused && !mGame.isGameOver()){
             pauseBtn.setBackground((getResources().getDrawable(android.R.drawable.ic_media_play)));
             mGame.pauseNplayGame();
             is_paused = true;
         }
-        else{
+        else if (!mGame.isGameOver()){
             pauseBtn.setBackground((getResources().getDrawable(android.R.drawable.ic_media_pause)));
             mGame.pauseNplayGame();
             is_paused = false;

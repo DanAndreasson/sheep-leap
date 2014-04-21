@@ -62,6 +62,8 @@ public class Game implements Runnable {
     private boolean spawnedFirst;
     private Splashtext chunkSplashText;
     private Splashtext highscoreSplashText;
+    private boolean gameOver;
+
     // Constructor
     public Game(FragmentActivity fa) {
         this.playActivity = fa;
@@ -85,7 +87,7 @@ public class Game implements Runnable {
     public void restartGame() {
         playActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         this.lostGame = false;
-
+        this.gameOver = false;
         this.livesLeft = 4;
         this.score = 0;
         this.level = 1;
@@ -1007,6 +1009,7 @@ public class Game implements Runnable {
     public void gameOver() {
         this.lostGame = true;
         this.paused = true;
+        this.gameOver = true;
         Resources.soundManager.playSound(SoundManager.GAMEOVER_SOUND);
         if (this.score > 0) {
             Resources.HIGHSCORE.createScore(this.score);
@@ -1042,5 +1045,9 @@ public class Game implements Runnable {
 
     public int getLevel() {
         return level;
+    }
+
+    public boolean isGameOver() {
+        return gameOver;
     }
 }

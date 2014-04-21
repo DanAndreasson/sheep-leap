@@ -20,7 +20,6 @@ import java.security.NoSuchAlgorithmException;
 public class MenuActivity extends FragmentActivity {
 
     private FBFragment fbFragment;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -45,7 +44,7 @@ public class MenuActivity extends FragmentActivity {
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
-                System.out.println("KeyHash: " + (Base64.encodeToString(md.digest(), Base64.DEFAULT)));
+                System.out.println("DEBUG: KeyHash: " + (Base64.encodeToString(md.digest(), Base64.DEFAULT)));
             }
         } catch (PackageManager.NameNotFoundException e) {
             System.out.println("EXCEPTION: " + e);
@@ -54,7 +53,10 @@ public class MenuActivity extends FragmentActivity {
         }
 
 
+
+
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

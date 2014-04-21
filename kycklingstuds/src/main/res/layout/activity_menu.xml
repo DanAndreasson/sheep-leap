@@ -7,6 +7,15 @@
     android:id="@+id/menu">
 
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:id="@+id/keyHash"
+        android:layout_gravity="left|top"
+        android:textColor="#FFFFFF"
+        android:visibility="visible" />
+
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
