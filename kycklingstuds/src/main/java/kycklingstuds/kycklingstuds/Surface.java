@@ -17,6 +17,7 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     private Canvas mCanvas;
     private SurfaceHolder mHolder;
     private Paint mPaint;
+    private Paint scorePaint;
     private Paint mPaintPC; // Peronal Record Paint
     private Game game;
     private boolean running;
@@ -32,12 +33,16 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         mHolder = this.getHolder();
         mHolder.addCallback(this);
         mPaint = new Paint(Color.BLACK);
-        mPaint.setColor(Color.BLACK);
+        mPaint.setColor(Color.WHITE);
         mPaint.setStyle(Paint.Style.FILL);
         mPaint.setTextSize(50);
 
-        mPaintPC = new Paint(Color.RED);
-        mPaintPC.setColor(Color.RED);
+        scorePaint = new Paint(Color.BLACK);
+        scorePaint.setColor(Color.WHITE);
+        scorePaint.setTextSize(70);
+
+        mPaintPC = new Paint(Color.BLACK);
+        mPaintPC.setColor(Color.WHITE);
         mPaintPC.setTextSize(25);
 
 
@@ -89,8 +94,8 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
             c.drawBitmap(Resources.LIFE_LEFT, 50 + (50 * i), 50, null);
         }
 
-        c.drawText(Integer.toString(game.getScore()) + "p", getWidth() - 155, 100, mPaint);
-        c.drawText("Personal best: " + Integer.toString(Resources.HIGHSCORE.getHighscore().getPoints()) + "p", getWidth() - 230, 135, mPaintPC);
+        c.drawText(Integer.toString(game.getScore()) + "p", (getWidth()/2) - 40, 100, scorePaint);
+        c.drawText("Personal best: " + Integer.toString(Resources.HIGHSCORE.getHighscore().getPoints()) + "p", getWidth() - 230, 100, mPaintPC);
         c.drawText("Level: " + Integer.toString(game.getLevel()), getWidth() - 230, 45, mPaint);
 
 
