@@ -130,7 +130,6 @@ public class Game implements Runnable {
                 break;
             case 2:
                 this.spawnPool = chunkTwo();
-
                 break;
             case 3:
                 this.spawnPool = chunkThird();
@@ -141,9 +140,17 @@ public class Game implements Runnable {
                 this.spawnPool = chunkFour();
                 break;
             case 5:
-                this.spawnPool = chunkFive();
+                if(this.livesLeft == 4) {
+                    chunkSplashText.drawText("Bonuslevel!!!");
+                    this.spawnPool = bonusChunk();
+                    this.requiredPassedChunks = 1;
+                }
+                else
+                    this.spawnPool = chunkFive();
+
                 break;
             case 6:
+                this.requiredPassedChunks = 10;
                 this.spawnPool = chunkSix();
                 break;
             // DIFFICULT 2
@@ -517,6 +524,31 @@ public class Game implements Runnable {
 
     }
 
+
+    private Queue<Spawn> bonusChunk() {
+        Queue<Spawn> sp = new LinkedList<Spawn>();
+
+        sp.add(new Spawn(this, 1200));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 500));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 30));
+        sp.add(new Spawn(this, 1200));
+        return sp;
+
+
+    }
     //HARD
     private Queue<Spawn> chunkSix() {
         Queue<Spawn> sp = new LinkedList<Spawn>();
