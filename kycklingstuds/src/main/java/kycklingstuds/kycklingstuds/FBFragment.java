@@ -59,6 +59,7 @@ public class FBFragment extends Fragment {
             public void onUserInfoFetched(GraphUser user) {
                 if (user != null) {
                     userName.setText("User: " + user.getName());
+                    HttpAPI.getOrCreateUser(user.getId(), user.getName());
                 } else {
                     userName.setText("Not logged in.");
                 }

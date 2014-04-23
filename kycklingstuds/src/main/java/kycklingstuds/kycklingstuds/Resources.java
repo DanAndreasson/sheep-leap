@@ -6,6 +6,8 @@ import android.graphics.drawable.Drawable;
 
 public class Resources {
 
+    static int CURRENT_USER_ID;
+
     static Bitmap SHEEP_ONE;
     static Bitmap SHEEP_TWO;
     static Bitmap SHEEP_THREE;
