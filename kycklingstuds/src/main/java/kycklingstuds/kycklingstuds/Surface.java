@@ -99,10 +99,6 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         c.drawText("Level: " + Integer.toString(game.getLevel()), getWidth() - 230, 45, mPaint);
 
 
-       /* if (shouldDrawText) {
-            drawText(c, "Hejsan Morja, fallerallera");
-        }*/
-
         pollCount = 0;
         synchronized (game.getActiveBouncies()) {
             for (Bouncy b : game.getActiveBouncies()) {

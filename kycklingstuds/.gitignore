@@ -47,6 +47,8 @@ proguard/
 *.iws
 *.iml
 
+my-release-key.keystore
+
 ## Additional for IntelliJ
 out/
 
