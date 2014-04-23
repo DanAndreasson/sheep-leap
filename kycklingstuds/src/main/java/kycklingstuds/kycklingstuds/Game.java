@@ -6,6 +6,8 @@ import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.WindowManager;
 
+import org.apache.http.client.methods.HttpGet;
+
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.Queue;
@@ -14,7 +16,7 @@ public class Game implements Runnable {
 
 
     // Instance Variables
-    private int playerID;
+
     private int score;
     private int highscore; // Load from local database or sync with server DB?
     private boolean paused;
@@ -973,6 +975,7 @@ public class Game implements Runnable {
         if(this.score > high_score && !highscoreAnnounced ){
             highscoreSplashText.drawText("New Highscore!!!");
             highscoreAnnounced = true;
+
         }
     }
 
@@ -1012,6 +1015,12 @@ public class Game implements Runnable {
         this.gameOver = true;
         Resources.soundManager.playSound(SoundManager.GAMEOVER_SOUND);
         if (this.score > 0) {
+            if(Resources.HIGHSCORE.getHighscore().getPoints() < this.score)
+            {
+                HttpAPI.postNewHighscore(Resources.CURRENT_USER_ID, this.score);
+                System.out.println("DEBUG: New highscore sent: " + this.score);
+            }
+
             Resources.HIGHSCORE.createScore(this.score);
             Resources.HIGHSCORE.newHighScore();
         }

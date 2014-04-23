@@ -14,7 +14,7 @@ android {
         release {
             storeFile file("my-release-key.keystore")
             storePassword "balobe"
-            keyAlias "alias_name"
+            keyAlias "sheep_leap"
             keyPassword "balobe"
         }
     }
@@ -32,7 +32,7 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:support-v4:19.0.0'
+    compile 'com.android.support:support-v4:19.0.3'
     compile 'com.android.support:appcompat-v7:+'
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile project(':facebook')
