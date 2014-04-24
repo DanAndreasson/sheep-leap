@@ -26,6 +26,7 @@ import java.io.InputStreamReader;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 public class HttpAPI {
 
@@ -53,9 +54,7 @@ public class HttpAPI {
                     JSONTokener tokener = new JSONTokener(builder.toString());
                     try {
                         JSONObject finalResult = new JSONObject(tokener);
-                        System.out.println("DEBUG: SERVER RESPONSE: " + finalResult);
-                        System.out.println("DEBUG: SERVER RESPONSE STATUS: " + response.getStatusLine());
-                        System.out.println("DEBUG: SERVER RESPONSE ID: " + finalResult.getInt("userID"));
+
                         Resources.CURRENT_USER_ID = finalResult.getInt("userID");
                     }
                     catch (Exception e){
@@ -110,5 +109,63 @@ public class HttpAPI {
         };
         atask.execute();
 
+    }
+
+    public static JSONArray getLeaderboard(final int quantity) {
+        // Create a new HttpClient and Post Header
+
+        AsyncTask atask = new AsyncTask() {
+
+            @Override
+            protected JSONArray doInBackground(Object[] objects) {
+                HttpClient httpclient = new DefaultHttpClient();
+                JSONArray highscores = new JSONArray();
+                HttpGet httpGet = new HttpGet("http://sheep-leap.raimat.webfactional.com/api/getHighscores?quantity=" + quantity);
+
+                try {
+
+                    // Execute HTTP Post Request
+
+                    HttpResponse response = httpclient.execute(httpGet);
+                    BufferedReader reader = new BufferedReader(new InputStreamReader(response.getEntity().getContent(), "UTF-8"));
+                    StringBuilder builder = new StringBuilder();
+                    for (String line; (line = reader.readLine()) != null;) {
+                        builder.append(line).append("\n");
+                    }
+                    JSONTokener tokener = new JSONTokener(builder.toString());
+                    try {
+                        JSONObject finalResult = new JSONObject(tokener);
+                        System.out.println("DEBUG: SERVER RESPONSE: " + finalResult);
+                        System.out.println("DEBUG: SERVER RESPONSE STATUS: " + response.getStatusLine());
+                        System.out.println("DEBUG: SERVER RESPONSE ARRAY: " + finalResult.getJSONArray("highscores"));
+                        highscores =  finalResult.getJSONArray("highscores");
+                    }
+                    catch (Exception e){
+                        System.out.println("DEBUG: JSON ERROR: " + e);
+                    }
+
+
+
+                } catch (ClientProtocolException e) {
+                    // TODO Auto-generated catch block
+                    System.out.println("DEBUG: ClientProtocolException: " + e);
+                } catch (IOException e) {
+                    // TODO Auto-generated catch block
+                    System.out.println("DEBUG: IOException: " + e);
+                }
+                return highscores;
+            }
+        };
+        atask.execute();
+        try {
+            return (JSONArray)atask.get();
+        }
+        catch (ExecutionException e){
+            System.out.println("DEBUG: ExecutionException" + e);
+        }
+        catch (InterruptedException e){
+            System.out.println("DEBUG: InterruptedException" + e);
+        }
+        return null;
     }
 }

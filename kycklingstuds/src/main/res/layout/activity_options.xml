@@ -4,8 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:alpha="0.95"
-    android:background="#222"
+    android:background="@drawable/full_app_s3_logo"
     android:orientation="vertical">
 
     <LinearLayout
@@ -20,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_weight="0.15"
             android:gravity="center|left"
-            android:text="Small Text"
+            android:text="Sound Volume"
             android:textAppearance="?android:attr/textAppearanceSmall" />
 
         <SeekBar
@@ -37,5 +36,6 @@
             android:gravity="center|right"
             android:text="100"
             android:textAppearance="?android:attr/textAppearanceSmall" />
+
     </LinearLayout>
 </LinearLayout>

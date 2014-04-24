@@ -32,6 +32,7 @@
         android:layout_gravity="left|bottom"
         android:onClick="onClickLeaderBtn(view)" />
 
+
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="200dp"
