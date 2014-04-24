@@ -2,10 +2,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="kycklingstuds.kycklingstuds.PlayActivity"
+    tools:context="kycklingstuds.sheep_leap.PlayActivity"
     android:background="#ffffff">
 
-    <kycklingstuds.kycklingstuds.Surface
+    <kycklingstuds.sheep_leap.Surface
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/gameCanvas"
