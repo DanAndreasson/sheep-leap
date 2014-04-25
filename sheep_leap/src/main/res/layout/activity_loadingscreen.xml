@@ -2,12 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    tools:context="kycklingstuds.sheep_leap.Loadingscreen">
+    tools:context="sheep_leap.sheep_leap.Loadingscreen">
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:id="@+id/imageView"
-        android:src="@drawable/background"
+        android:src="@drawable/background_s3"
         android:scaleType="fitXY" />
 
 

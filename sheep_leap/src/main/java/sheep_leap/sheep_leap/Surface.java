@@ -13,6 +13,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnTouchListener;
 
+import java.text.DecimalFormat;
+
 public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTouchListener, Runnable {
     private Canvas mCanvas;
     private SurfaceHolder mHolder;
@@ -25,6 +27,7 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     private View root;
 
     private Thread thread;
+
 
 
     public Surface(Context context, AttributeSet attrs) {
@@ -115,40 +118,18 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
         }
 
         c.drawBitmap(Resources.WHALE, game.getBoardXPos(), game.getBoardYPos(), null);
-        // c.drawLine(0, 250, 2000, 250, mPaint);
-       /* for (int i = 0; i < game.pathSize(); ++i){
-            c.drawOval(game.getWaypoint(i), mPaint);
-        }*/
+
 
 
     }
 
-/*
-    public void initText(String splashText) {
-        Rect areaRect = new Rect(0, 0, getWidth(), getHeight());
 
-        splashPos = new RectF(areaRect);
-        splashPos.right = splashPaint.measureText(splashText, 0, splashText.length());
-        splashPos.bottom = splashPaint.descent() - splashPaint.ascent();
-
-        splashPos.left += (areaRect.width() - splashPos.right) / 2.0f;
-        splashPos.top += ((areaRect.height() - splashPos.bottom) / 2.0f) * 0.40f;
-    }
-
-    public void drawText(Canvas c, String splashText) {
-        if (!hasInitializedText) {
-            initText(splashText);
-            hasInitializedText = true;
-        }
-        c.drawText(splashText, splashPos.left, splashPos.top - splashPaint.ascent(), splashPaint);
-    }
-
-*/
     @Override
     public void run() {
         System.out.println("DEBUG: TimetoExit: " + game.isTimeToExit() + " running: " + running + ". paused? " + game.isPaused());
         while (!game.isTimeToExit()) {
             while (running && !game.isPaused()) {
+
                 try {
                     mCanvas = mHolder.lockCanvas();
 
@@ -161,8 +142,13 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
                         mHolder.unlockCanvasAndPost(mCanvas);
                     }
                 }
+
             }
+            try {
+                Thread.sleep(10);
+            } catch(InterruptedException e) {}
         }
     }
+
 
 }
