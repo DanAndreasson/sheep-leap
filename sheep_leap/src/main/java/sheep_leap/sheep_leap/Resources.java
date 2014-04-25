@@ -10,9 +10,13 @@ public class Resources {
 
     static Bitmap SHEEP_ONE;
     static Bitmap SHEEP_TWO;
+
     static Bitmap SHEEP_THREE;
     static Bitmap SHEEP_FOUR;
     static Bitmap SHEEP_FIVE;
+    static Bitmap SHEEP_SIX;
+    static Bitmap SHEEP_SEVEN;
+    static Bitmap SHEEP_EIGTH;
     static Bitmap LIFE_LEFT;
     static Bitmap PILLAR_RIGHT;
     static Bitmap PILLAR_LEFT;

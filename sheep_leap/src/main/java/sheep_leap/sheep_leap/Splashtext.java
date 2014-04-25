@@ -37,7 +37,7 @@ public class Splashtext extends Thread {
                 });
     }
 
-
+    @TargetApi(14)
     public void drawText(final String text) {
 
         mActivity.runOnUiThread(new Runnable() {

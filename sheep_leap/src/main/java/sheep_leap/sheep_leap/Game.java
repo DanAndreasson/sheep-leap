@@ -123,7 +123,6 @@ public class Game implements Runnable {
 
     private void fillSpawnPool() {
         int randomChunk = randomNrRange(1, 1) + (this.difficulty);
-        System.out.println("DEBUG: Chunk: " + randomChunk);
 
         switch (randomChunk) {
             // DIFFICULT 0
@@ -184,7 +183,6 @@ public class Game implements Runnable {
         }
         sp.add(new Spawn(this, 400));
         int rand = randomNrRange(1, 6);//FITTLAAr d
-        System.out.println("DEBUG: RANDNR " + rand);
         if(rand == 1) {
             sp.add(new Spawn(this, 400));
         }

@@ -52,7 +52,7 @@ public class Bouncy {
         }
 
         if (++animationTick >= 15){
-            animationState = (animationState+1)%4;
+            animationState = (animationState+1)%8;
             animationTick = 0;
         }
     }
@@ -97,6 +97,12 @@ public class Bouncy {
                 return Resources.SHEEP_FOUR;
             case 4:
                 return Resources.SHEEP_FIVE;
+            case 5:
+                return Resources.SHEEP_SIX;
+            case 6:
+                return Resources.SHEEP_SEVEN;
+            case 7:
+                return Resources.SHEEP_EIGTH;
             default:
                 System.out.println("DEBUG: Bouncy animation error!");
                 return Resources.SHEEP_ONE;
