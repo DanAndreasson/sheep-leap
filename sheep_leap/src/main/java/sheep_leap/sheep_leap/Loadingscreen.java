@@ -1,5 +1,6 @@
 package sheep_leap.sheep_leap;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -8,10 +9,11 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.AttributeSet;
 import android.view.Display;
 import android.view.Menu;
 import android.view.MenuItem;
-
+import android.view.View;
 
 
 public class Loadingscreen extends FragmentActivity {
@@ -26,7 +28,6 @@ public class Loadingscreen extends FragmentActivity {
         loadLocalDb();
         loadResources(); // Initializes resources such as images, sounds etc
 
-
         Intent intent = new Intent(this, MenuActivity.class);
         startActivity(intent);
     }
@@ -38,6 +39,11 @@ public class Loadingscreen extends FragmentActivity {
         Display display = getWindowManager().getDefaultDisplay();
         int screen_width = display.getWidth();  // deprecated
         int screen_height = display.getHeight();  // deprecated
+        if(screen_height > screen_width){
+            int prev_width = screen_width;
+            screen_width = screen_height;
+            screen_height = prev_width;
+        }
         //Resources.RAW_BACKGROUND = getResources().getDrawable(R.drawable.background_sky_mountains);
 
         Resources.RAW_BACKGROUND = BitmapFactory.decodeResource(getResources(), R.drawable.background_sky_mountains);
@@ -134,5 +140,6 @@ public class Loadingscreen extends FragmentActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
 
 }
