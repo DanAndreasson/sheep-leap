@@ -8,6 +8,7 @@ import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
 import android.util.AttributeSet;
 import android.view.Display;
@@ -28,8 +29,18 @@ public class Loadingscreen extends FragmentActivity {
         loadLocalDb();
         loadResources(); // Initializes resources such as images, sounds etc
 
-        Intent intent = new Intent(this, MenuActivity.class);
-        startActivity(intent);
+        new CountDownTimer(5000,1000){
+            @Override
+            public void onTick(long millisUntilFinished){}
+
+            @Override
+            public void onFinish(){
+                //set the new Content of your activity
+                Intent intent = new Intent(Loadingscreen.this, MenuActivity.class);
+                startActivity(intent);
+            }
+        }.start();
+
     }
 
     private void loadResources() {

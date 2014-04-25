@@ -3,6 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     tools:context="sheep_leap.sheep_leap.Loadingscreen">
+
     <ImageView
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
@@ -10,6 +11,14 @@
         android:src="@drawable/background_s3"
         android:scaleType="fitXY" />
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Loading..."
+        android:id="@+id/textView"
+        android:layout_gravity="center"
+        android:textSize="40dp" />
 
 
 </FrameLayout>
