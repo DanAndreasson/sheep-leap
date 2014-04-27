@@ -27,7 +27,7 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     private View root;
 
     private Thread thread;
-
+    private boolean hasLoaded;
 
 
     public Surface(Context context, AttributeSet attrs) {
@@ -53,9 +53,11 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
 
     public void restartSurface() {
         running = true;
+
     }
 
     public void setGame(Game g) {
+        hasLoaded = false;
         game = g;
     }
 
@@ -71,11 +73,10 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
     public void surfaceCreated(SurfaceHolder holder) {
         Resources.DEFAULT_BACKGROUND.setBounds(0, 0, getWidth(), getHeight());
         // Resources.WHALE.setBounds((int) game.getBoardXPos(), (int) game.getBoardYPos(), (int) game.getBoardWidthPos(), (int) game.getBoardHeightPos());
-
         thread = new Thread(this);
         thread.start();
         restartSurface();
-        game.start();
+        //game.start();
     }
 
     @Override
@@ -91,6 +92,10 @@ public class Surface extends SurfaceView implements SurfaceHolder.Callback, OnTo
 
     @Override
     public void onDraw(Canvas c) {
+        if (!hasLoaded){
+            hasLoaded = true;
+            game.start();
+        }
         Resources.DEFAULT_BACKGROUND.draw(c);
 
         for (int i = 0; i < game.getLivesLeft(); ++i) {

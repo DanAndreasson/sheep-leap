@@ -3,7 +3,9 @@ package sheep_leap.sheep_leap;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.Window;
@@ -46,9 +48,32 @@ public class PlayActivity extends FragmentActivity {
         mContext = getApplicationContext();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.activity_play);
         System.out.println("DEBUG: ONCREATE PLAY");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        System.out.println("DEBUG: PLAY ONRESUME");
+        setContentView(R.layout.activity_play);
         init();
+        //setContentView(R.layout.activity_loadingscreen);
+        /*new CountDownTimer(1500,1000){
+            @Override
+            public void onTick(long millisUntilFinished){}
+
+            @Override
+            public void onFinish(){
+                setContentView(R.layout.activity_play);
+                init();
+            }
+        }.start();
+*/
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
     }
 
     @Override
@@ -69,6 +94,14 @@ public class PlayActivity extends FragmentActivity {
             pauseBtn.setBackground((getResources().getDrawable(android.R.drawable.ic_media_pause)));
             mGame.pauseNplayGame();
             is_paused = false;
+        }
+
+    }
+
+    @TargetApi(14)
+    public void retryBtnClicked(View v){
+        if(!is_paused && !mGame.isGameOver()){
+            mGame.restartGame();
         }
 
     }

@@ -88,4 +88,12 @@
         android:layout_marginRight="120dp"
         android:onClick="pauseBtnClicked"
         android:background="@android:drawable/ic_media_pause" />
+    <Button
+        android:layout_width="51dp"
+        android:layout_height="44dp"
+        android:id="@+id/retryButton"
+        android:layout_gravity="right|top"
+        android:layout_marginRight="160dp"
+        android:onClick="retryBtnClicked"
+        android:background="@android:drawable/ic_media_previous" />
 </FrameLayout>

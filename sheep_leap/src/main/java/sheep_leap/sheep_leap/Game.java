@@ -84,6 +84,7 @@ public class Game implements Runnable {
 
     }
 
+
     public void restartGame() {
         playActivity.getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         this.lostGame = false;
@@ -178,11 +179,12 @@ public class Game implements Runnable {
 
         //Var full
         if(!spawnedFirst){
-            sp.add(new Spawn(this, 900));
+            sp.add(new Spawn(this, 200));
             spawnedFirst = true;
         }
+
         sp.add(new Spawn(this, 400));
-        int rand = randomNrRange(1, 6);//FITTLAAr d
+        int rand = randomNrRange(1, 6);
         if(rand == 1) {
             sp.add(new Spawn(this, 400));
         }

@@ -19,25 +19,41 @@ import android.view.View;
 
 public class Loadingscreen extends FragmentActivity {
 
+    private boolean resourcesLoaded;
+    private boolean databaseLoaded;
+    private boolean backgroundCreated;
+    private boolean soundLoaded;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_loadingscreen);
 
+        resourcesLoaded = false;
+        databaseLoaded = false;
+        backgroundCreated = false;
+        soundLoaded = false;
 
         loadSound();
         loadLocalDb();
         loadResources(); // Initializes resources such as images, sounds etc
 
-        new CountDownTimer(5000,1000){
+
+        new CountDownTimer(3000,1000){
             @Override
             public void onTick(long millisUntilFinished){}
 
             @Override
             public void onFinish(){
                 //set the new Content of your activity
-                Intent intent = new Intent(Loadingscreen.this, MenuActivity.class);
-                startActivity(intent);
+                if(resourcesLoaded && databaseLoaded && backgroundCreated && soundLoaded) {
+                    Intent intent = new Intent(Loadingscreen.this, MenuActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    System.out.println("DEBUG: ERROR: Resources not loaded..");
+                    recreate();
+                }
             }
         }.start();
 
@@ -100,6 +116,7 @@ public class Loadingscreen extends FragmentActivity {
         Resources.SHEEP_EIGTH = Bitmap.createScaledBitmap(Resources.SHEEP_EIGTH, 100, 100, false);
 
         Resources.DEFAULT_BACKGROUND =  createBackground(screen_width, screen_height);
+        resourcesLoaded = true;
     }
 
     private Drawable createBackground(int screen_width, int screen_height){
@@ -118,17 +135,20 @@ public class Loadingscreen extends FragmentActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        backgroundCreated = true;
         return new BitmapDrawable(getResources(),raw_background);
     }
 
     private void loadSound(){
         Resources.soundManager = new SoundManager(this);
+        soundLoaded = true;
     }
 
     private void loadLocalDb(){
+
         Resources.HIGHSCORE = new Highscore(this);
         Resources.HIGHSCORE.open();
+        databaseLoaded = true;
     }
 
 
