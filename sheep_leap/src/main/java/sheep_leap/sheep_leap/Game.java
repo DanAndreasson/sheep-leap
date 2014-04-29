@@ -142,17 +142,16 @@ public class Game implements Runnable {
                 this.spawnPool = chunkFour();
                 break;
             case 5:
-                if(this.livesLeft == 4) {
+                /*if(this.livesLeft == 4) {
                     chunkSplashText.drawText("Bonuslevel!!!");
                     this.spawnPool = bonusChunk();
                     this.requiredPassedChunks = 1;
                 }
-                else
-                    this.spawnPool = chunkFive();
+                else*/
+                this.spawnPool = chunkFive();
 
                 break;
             case 6:
-                this.requiredPassedChunks = 10;
                 this.spawnPool = chunkSix();
                 break;
             // DIFFICULT 2
@@ -183,25 +182,25 @@ public class Game implements Runnable {
             spawnedFirst = true;
         }
 
-        sp.add(new Spawn(this, 400));
-        int rand = randomNrRange(1, 6);
+        sp.add(new Spawn(this, 200));
+        int rand = randomNrRange(1, 6);//FITTLAAr d
         if(rand == 1) {
-            sp.add(new Spawn(this, 400));
+            sp.add(new Spawn(this, 200));
         }
         else if (rand == 2){
-            sp.add(new Spawn(this, 180));
+            sp.add(new Spawn(this, 400));
         }
         else if (rand == 3){
             sp.add(new Spawn(this, 300));
         }
         else if (rand == 4){
-            sp.add(new Spawn(this, 400));
+            sp.add(new Spawn(this, 100));
         }
         else if (rand == 5){
-            sp.add(new Spawn(this, 600));
+            sp.add(new Spawn(this, 400));
         }//GTFO
         else if (rand == 6){
-            sp.add(new Spawn(this, 300));
+            sp.add(new Spawn(this, 100));
         }
 
        /* sp.add(new Spawn(this, 100));
