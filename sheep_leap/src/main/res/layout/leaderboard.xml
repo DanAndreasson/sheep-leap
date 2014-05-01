@@ -5,12 +5,30 @@
     android:background="#222">
 
     <TextView
+        android:id="@+id/position"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="TextView"
+        android:layout_alignParentRight="false"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_alignParentEnd="false"
+        android:layout_alignWithParentIfMissing="false"
+        android:layout_alignParentTop="false"
+        android:layout_alignParentLeft="false"
+        android:paddingRight="20dp"
+        android:textSize="20dp"
+        android:paddingBottom="10dp" />
+    <TextView
         android:id="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
         android:text="TextView"
+        android:gravity="bottom"
+        android:textAlignment="gravity"
         android:paddingLeft="20dp" />
 
     <TextView
@@ -27,6 +45,7 @@
         android:textSize="20dp"
         android:paddingRight="20dp"
         android:paddingBottom="10dp" />
+
 
 
 </RelativeLayout>

@@ -42,6 +42,7 @@ public class LeaderboardActivity extends Activity {
                 HashMap<String, String> map = new HashMap<String, String>();
                 map.put("name", name);
                 map.put("score", Integer.toString(score));
+                map.put("position", Integer.toString(i+1));
                 newhighscoreList.add(map);
             }
         }
@@ -53,8 +54,8 @@ public class LeaderboardActivity extends Activity {
         list=(ListView)findViewById(R.id.leaderboard);
         ListAdapter adapter = new SimpleAdapter(LeaderboardActivity.this, newhighscoreList,
                 R.layout.leaderboard,
-                new String[] { "name", "score" }, new int[] {
-                R.id.name,R.id.score});
+                new String[] { "name", "score", "position" }, new int[] {
+                R.id.name,R.id.score, R.id.position});
         list.setAdapter(adapter);
 
     }
