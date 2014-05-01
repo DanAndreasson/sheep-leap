@@ -22,7 +22,7 @@ public class PlayActivity extends FragmentActivity {
     public static Activity playActivity;
     static LinearLayout mRetryContainer;
     static LinearLayout mSplashTextContainer;
-
+    private FBFragment fbFragment;
     boolean is_paused = false;
 
     public static Context getContext() {
@@ -45,6 +45,20 @@ public class PlayActivity extends FragmentActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        if (savedInstanceState == null) {
+            // Add the fragment on initial activity setup
+            fbFragment = new FBFragment();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .add(android.R.id.content, fbFragment)
+                    .commit();
+        } else {
+            // Or set the fragment from restored state info
+            fbFragment = (FBFragment) getSupportFragmentManager()
+                    .findFragmentById(android.R.id.content);
+        }
+
+
         mContext = getApplicationContext();
         requestWindowFeature(Window.FEATURE_NO_TITLE);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
@@ -104,6 +118,10 @@ public class PlayActivity extends FragmentActivity {
             mGame.restartGame();
         }
 
+    }
+
+    public void inviteFriendClicked(View v){
+        fbFragment.inviteFriend();
     }
     public void restartGame(View v) {
         mGame.restartGame();

@@ -178,7 +178,7 @@ public class FBFragment extends Fragment {
         }
     }
 
-    private void inviteFriend() {
+    public void inviteFriend() {
         Bundle params = new Bundle();
         params.putString("message", "My highscore is " + Integer.toString(Resources.HIGHSCORE.getHighscore().getPoints()) + " points. Can you beat me?");
 

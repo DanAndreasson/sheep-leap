@@ -114,7 +114,7 @@
             style="@style/Widget.AppCompat.ActionBar.TabText"
             android:layout_width="125dp"
             android:layout_height="40dp"
-            android:text="Invite"
+            android:text="Brag"
             android:id="@+id/inviteFriendButton"
             android:background="@android:color/darker_gray"
             android:textSize="20dp"

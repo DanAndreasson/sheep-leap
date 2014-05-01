@@ -33,7 +33,7 @@
 
     <LinearLayout
         android:orientation="vertical"
-        android:layout_width="300dp"
+        android:layout_width="400dp"
         android:layout_height="200dp"
         android:alpha="0.8"
         android:weightSum="1"
@@ -77,6 +77,17 @@
                 android:textColor="#ffffff"
                 android:onClick="exitToMenu"
                 android:background="@drawable/retrynobtn"/>
+
+            <Button
+                style="@style/Widget.AppCompat.ActionBar.TabText"
+                android:layout_width="125dp"
+                android:layout_height="40dp"
+                android:text="Brag"
+                android:background="@android:color/darker_gray"
+                android:textSize="20dp"
+                android:layout_weight="0.7"
+                android:onClick="inviteFriendClicked"
+                android:height="34dp"/>
         </LinearLayout>
 
     </LinearLayout>
