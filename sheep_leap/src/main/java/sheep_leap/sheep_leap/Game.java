@@ -182,6 +182,7 @@ public class Game implements Runnable {
             spawnedFirst = true;
         }
 
+
         sp.add(new Spawn(this, 200));
         int rand = randomNrRange(1, 6);//FITTLAAr d
         if(rand == 1) {
@@ -385,8 +386,8 @@ public class Game implements Runnable {
         sp.add(new Spawn(this, 100));
         sp.add(new Spawn(this, 150));*/
 
-        sp.add(new Spawn(this, 200));
-        int rand = randomNrRange(1, 6);//FITTLAAr d
+        sp.add(new Spawn(this, 100));
+        int rand = randomNrRange(1, 20);//FITTLAAr d
         if(rand == 1) {
             sp.add(new Spawn(this, 200));
         }
@@ -397,15 +398,12 @@ public class Game implements Runnable {
             sp.add(new Spawn(this, 300));
         }
         else if (rand == 4){
-            sp.add(new Spawn(this, 100));
-
+            sp.add(new Spawn(this, 200));
+            sp.add(new Spawn(this, 10));
         }
         else if (rand == 5){
-            sp.add(new Spawn(this, 600));
-            sp.add(new Spawn(this, 8));
-            sp.add(new Spawn(this, 8));
-            sp.add(new Spawn(this, 8));
-
+            sp.add(new Spawn(this, 400));
+            sp.add(new Spawn(this, 10));
         }//GTFO
         else if (rand == 6){
             sp.add(new Spawn(this, 100));
